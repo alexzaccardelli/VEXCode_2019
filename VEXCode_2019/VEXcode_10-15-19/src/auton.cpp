@@ -20,7 +20,7 @@ namespace auton {
     arm::move(0, 100, 0.6, 20, 300);
     return 1;
   }
-
+  //idk how this works lol its fine
   void redSmall() {
     vex::timer timer;
     timer.clear();
