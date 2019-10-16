@@ -8,7 +8,7 @@ int main() {
   //Reset all motors and sensors
   drive::reset();
   roller::reset();
-  arm::reset();
+  arm::reset(); 
 
   //Auton or Driver control select
   while(true) {
