@@ -13,7 +13,7 @@ namespace roller {
   */
   void reset();
 
-  /*
+  /* 
     Set left and right to speed
       Default parameter:
         speed = 100
