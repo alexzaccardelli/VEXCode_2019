@@ -26,7 +26,7 @@ namespace auton {
     timer.clear();
 
     vex::task temp(_smallLift);
-    drive::forward(14); //Temporary value
+    drive::forward(23); //Temporary value
     temp.stop();
     roller::intake();
     arm::resetBotLimit();

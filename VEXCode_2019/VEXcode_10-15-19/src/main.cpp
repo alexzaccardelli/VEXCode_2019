@@ -10,16 +10,9 @@ int main() {
   roller::reset();
   arm::reset(); 
 
-  //Auton or Driver control select
-  while(true) {
-    if(Controller.ButtonA.pressing())
-      auton::redSmall();
-    else if(Controller.ButtonB.pressing())
-      break;
-     else if(Controller.ButtonY.pressing())
-      arm::move(130, 100, 1, 20, 200);
-    vex::task::sleep(5);
-  }
+  //auton::redSmall();
+  drive::forward(100);
+  vex::task::sleep(5);
   
   //Driver Control Tasks
   vex::task driveTask(drive::op);
