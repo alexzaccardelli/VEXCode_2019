@@ -20,6 +20,7 @@ namespace auton {
     arm::move(0, 100, 0.6, 20, 300);
     return 1;
   }
+
   //idk how this works lol its fine
   void redSmall() {
     vex::timer timer;
@@ -34,8 +35,9 @@ namespace auton {
         arm::run(-100);
     vex::task::sleep(700);
     roller::reset();
+    arm::reset();
 
-    for(int i = 0; i < 2; i++) { //Was 3
+    for(int i = 0; i < 2; i++) {
       arm::resetBotLimit();
       temp = vex::task(_smallLift); //Does it need vex::task
       drive::forward(5.5);
@@ -44,7 +46,8 @@ namespace auton {
       while(arm::botLimit.value() == 0)
         arm::run(-100);
       vex::task::sleep(700);
-      roller::reset();      
+      arm::reset();
+      roller::reset();
     }
 
     drive::turn(125); //Was 135

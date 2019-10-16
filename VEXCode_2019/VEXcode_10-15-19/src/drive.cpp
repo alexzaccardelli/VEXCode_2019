@@ -83,7 +83,7 @@ namespace drive {
     inches = inches - inches / 27.0;
     vex::timer closeEnoughTimer, timer;
     int leftSpeed = 0, rightSpeed = 0, delay = 5, accel = 1; //was 10 delay
-    double target = 8.693 * 2 * inches, leftKp = kP, rightKp = kP, leftError = 0.0, rightError = 0.0;
+    double target = 41.66966 * inches, leftKp = kP, rightKp = kP, leftError = 0.0, rightError = 0.0;
     //leftEnc.setRotation(0, vex::rotationUnits::deg);
     vex::task::sleep(300);
     closeEnoughTimer.clear(); timer.clear();
