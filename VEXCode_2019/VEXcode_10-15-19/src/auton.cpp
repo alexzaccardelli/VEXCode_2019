@@ -26,8 +26,8 @@ namespace auton {
     vex::timer timer;
     timer.clear();
 
-    vex::task temp(_smallLift);
-    drive::forward(23); //Temporary value
+    vex::task temp(_smallLift); //Maybe change
+    drive::forward(23); //Needs changing
     temp.stop();
     roller::intake();
     arm::resetBotLimit();
@@ -57,9 +57,7 @@ namespace auton {
     drive::reset();
     macro::stack();
 
-    Brain.Screen.clearScreen();
-    Brain.Screen.setCursor(5, 5);
-    Brain.Screen.print(timer.time());
+    Brain.Screen.printAt(5, 5, "%d", timer.time());
   }
 
   void blueBigNew() {

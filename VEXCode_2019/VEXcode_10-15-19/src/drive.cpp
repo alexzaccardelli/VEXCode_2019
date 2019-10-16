@@ -7,8 +7,6 @@ namespace drive {
   vex::motor right2 (vex::PORT4, vex::gearSetting::ratio18_1, true);
   vex::encoder leftEnc (Brain.ThreeWirePort.A);
   vex::encoder rightEnc (Brain.ThreeWirePort.C);
-  std::vector<double> forwardError, forwardSpeed, forwardRotation, forwardTime;
-  std::vector<double> turnError, turnSpeed, turnRotation, turnTime;
   const double maxDef=100, kPDef=0.14, cerDef=10, cedDef=300;
   
   void reset() {
@@ -116,19 +114,10 @@ namespace drive {
       right1.spin(vex::directionType::fwd, rightSpeed, vex:: velocityUnits::pct);
       right2.spin(vex::directionType::fwd, rightSpeed, vex:: velocityUnits::pct);
 
-      //Information
-      forwardTime.emplace_back(timer.time());
-      forwardError.emplace_back(leftError);
-      forwardSpeed.emplace_back(leftSpeed);
-      forwardRotation.emplace_back(leftEnc.rotation(vex::rotationUnits::deg));
-
       //Delay
       vex::task::sleep(delay);
     }
     reset();
-    for(int i = 0; i < forwardTime.size(); i++) {
-      printf("Time: %f5, Ticks: %f5, Error: %f5, Speed: %f5\n", forwardTime[i], forwardRotation[i], forwardError[i], forwardSpeed[i]);
-    }
     return 1;
   }
 
