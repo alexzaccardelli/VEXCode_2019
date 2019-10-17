@@ -13,7 +13,7 @@ namespace auton {
     return 1;
   }
   int _smallLift() {
-    arm::move(170, 100, 0.6, 20, 200);
+    arm::move(230, 100, 0.6, 20, 200);
     return 1;
   }
   int _medLift() {
@@ -23,42 +23,53 @@ namespace auton {
 
   //idk how this works lol its fine
   void redSmall() {
+    
     vex::timer timer;
     timer.clear();
     arm::resetBotLimit();
     arm::setEncoder(0);
 
     vex::task temp(_smallLift); //Maybe change
-    drive::forward(23); //Needs changing
+    
+    //vex::task temp1(arm::hold);
+    drive::forward(18.5, 100, 0.12, 25, 100); //Needs changing
+    
     temp.stop();
+    //temp1.stop();
     roller::intake();
-    arm::resetBotLimit();
-    while(arm::botLimit.value() == 0)
-        arm::run(-100);
+    //arm::resetBotLimit();
+    vex::limit blah(Brain.ThreeWirePort.H);
+    arm::run(-100);
+    while(blah.value() == 0) {}
+    arm::reset();
     vex::task::sleep(700);
     roller::reset();
-    arm::reset();
+    
 
     for(int i = 0; i < 2; i++) {
-      arm::resetBotLimit();
       temp = vex::task(_smallLift);
-      drive::forward(5.5);
+      //temp1 = vex::task(arm::hold);
+      drive::forward(5.5, 100, 0.12, 25, 100);
+      
       temp.stop();
+      //temp1.stop();
       roller::intake();
-      while(arm::botLimit.value() == 0)
-        arm::run(-100);
-      vex::task::sleep(700);
+      vex::limit blah1(Brain.ThreeWirePort.H);
+      arm::run(-100);
+      while(blah1.value() == 0) {}
       arm::reset();
+      vex::task::sleep(700);
       roller::reset();
     }
 
     drive::turn(125);
     drive::run(100);
-    vex::task::sleep(1000); //Needs changing
+    vex::task::sleep(1600); //Needs changing
     drive::reset();
     macro::stack();
-
-    Brain.Screen.printAt(5, 5, "%d", timer.time());
+    Brain.Screen.clearScreen();
+    Brain.Screen.setCursor(8, 5);
+    Brain.Screen.print(timer.time());
   }
 
   void blueBigNew() {

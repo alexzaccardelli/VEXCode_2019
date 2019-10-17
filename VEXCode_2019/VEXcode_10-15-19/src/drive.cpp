@@ -7,7 +7,7 @@ namespace drive {
   vex::motor right2 (vex::PORT4, vex::gearSetting::ratio18_1, true);
   vex::encoder leftEnc (Brain.ThreeWirePort.A);
   vex::encoder rightEnc (Brain.ThreeWirePort.C);
-  const double maxDef=100, kPDef=0.14, cerDef=10, cedDef=300;
+  const double maxDef=100, kPDef=0.12, cerDef=20, cedDef=200;
   
   void reset() {
     left1.stop();
@@ -75,10 +75,10 @@ namespace drive {
 
   int forward(double inches, double max, double kP, double closeEnoughRange, double closeEnoughDelay) {
     reset();
-    inches = inches - inches / 27.0;
+
     vex::timer closeEnoughTimer, timer;
-    int leftSpeed = 0, rightSpeed = 0, delay = 5, accel = 1; //was 10 delay
-    double target = 41.66966 * inches, leftKp = kP, rightKp = kP, leftError = 0.0, rightError = 0.0;
+    double leftSpeed = 0, rightSpeed = 0, delay = 10; //was 10 delay
+    double target = 41.66966 * inches, leftKp = kP, rightKp = kP, leftError = 0.0, rightError = 0.0, accel = 0.8;
     //leftEnc.setRotation(0, vex::rotationUnits::deg);
     vex::task::sleep(300);
     closeEnoughTimer.clear(); timer.clear();

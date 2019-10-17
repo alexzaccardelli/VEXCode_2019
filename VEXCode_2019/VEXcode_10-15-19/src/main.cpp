@@ -9,10 +9,11 @@ int main() {
   drive::reset();
   roller::reset();
   arm::reset(); 
+  
+  //auton::redSmall();
+  //drive::forward(48);
+  //vex::task::sleep(5);
 
-  auton::redSmall();
-  //drive::forward(100);
-  vex::task::sleep(5);
   
   //Driver Control Tasks
   vex::task driveTask(drive::op);

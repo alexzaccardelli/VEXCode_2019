@@ -30,12 +30,12 @@ namespace macro {
     roller::outake();
     vex::task::sleep(800);
     roller::reset();
-    if(arm::left.rotation(vex::rotationUnits::deg) < 50)
-      drive::forward(-1, 100, 0.14, 30, 150); //Was just -1
-    arm::run(40);
+    //if(arm::left.rotation(vex::rotationUnits::deg) < 50)
+      //drive::forward(-1, 100, 0.14, 30, 150); //Was just -1
+    arm::run(80);
     roller::outake();
     vex::timer timer;
-    while(arm::left.rotation(vex::rotationUnits::deg) < 860 && timer.time() < 2700) {}
+    while(arm::left.rotation(vex::rotationUnits::deg) < 860 && timer.time() < 1700) {}
     arm::stop();
     roller::reset();
     if(a != NULL && b != NULL && c != NULL) {
@@ -43,6 +43,8 @@ namespace macro {
       b->resume();
       c->resume();
     }
+    arm::degreesLeft = arm::left.rotation(vex::rotationUnits::deg);
+    arm::degreesRight = arm::right.rotation(vex::rotationUnits::deg);
     return 1;
   }
 }

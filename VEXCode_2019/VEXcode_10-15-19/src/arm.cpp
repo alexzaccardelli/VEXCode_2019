@@ -4,7 +4,8 @@ namespace arm {
   vex::motor left (vex::PORT9, vex::gearSetting::ratio36_1, false);
   vex::motor right (vex::PORT6, vex::gearSetting::ratio36_1, true);
   vex::limit botLimit (Brain.ThreeWirePort.H);
-  double const maxDef=100, kPDef=0.6, cerDef=20, cedDef=200;
+  double const maxDef=100, kPDef=0.6, cerDef=10, cedDef=200;
+  double degreesLeft = 0, degreesRight = 0;
   
   void reset() {
     left.stop();
@@ -16,7 +17,7 @@ namespace arm {
     resetBotLimit();
   }
   void resetBotLimit() {
-    vex::limit botLimit(Brain.ThreeWirePort.H);
+    //vex::limit botLimit(Brain.ThreeWirePort.H);
   }
 
   void setEncoder(double val) {
@@ -33,7 +34,7 @@ namespace arm {
   }
 
   int op() {
-    int upSpeed = 100, downSpeed = -50, delay = 10, degreesLeft = 0, degreesRight = 0;
+    int upSpeed = 100, downSpeed = -50, delay = 10;
     double leftSpeed = 0, rightSpeed = 0, max = 100, kP = 0.5, leftError = 0, rightError = 0;
     while(true) {
       while(Controller.ButtonR1.pressing()) {
@@ -74,10 +75,11 @@ namespace arm {
     return 1;
   }
 
-  int hold(double degrees) {
+  int hold() {
     stop();
     double leftError = 0, rightError = 0, kP = 0.5, max = 100, leftSpeed = 0, rightSpeed = 0; //Needs tuning
     int delay = 10;
+    double degrees = left.rotation(vex::rotationUnits::deg);
     vex::timer timer, closeEnoughTimer;
     closeEnoughTimer.clear(); timer.clear();
     while(true) {

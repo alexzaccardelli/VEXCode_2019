@@ -6,9 +6,11 @@ namespace arm {
   //Global access
   extern vex::motor left, right;
   extern vex::limit botLimit;
+  extern double degreesLeft, degreesRight;
 
   //Default parameters for move()
   extern const double maxDef, kPDef, cerDef, cedDef;
+  
 
   /*
     stop left and right motor
@@ -53,12 +55,10 @@ namespace arm {
   /*
     Hold left and right at last recorded encoder position
   */
-  int hold(double degrees = left.rotation(vex::rotationUnits::deg));
+  int hold();
 
   /*
     Driver control of arm
-      Default parameters:
-        degrees = left.rotation()
       R1: up
       R2: down
       None: hold motors at last recorded encoder position
