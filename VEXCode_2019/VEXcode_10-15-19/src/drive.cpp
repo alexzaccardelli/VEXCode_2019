@@ -21,22 +21,19 @@ namespace drive {
     leftEnc.setRotation(0, vex::rotationUnits::deg);
     rightEnc.setRotation(0, vex::rotationUnits::deg);
   }
-  int run(int speed) {
+  void run(int speed) {
     left1.spin(vex::directionType::fwd, speed, vex:: velocityUnits::pct);
     left2.spin(vex::directionType::fwd, speed, vex:: velocityUnits::pct);
     right1.spin(vex::directionType::fwd, speed, vex:: velocityUnits::pct);
     right2.spin(vex::directionType::fwd, speed, vex:: velocityUnits::pct);
-    return 1;
   }
-  int runLeft(int speed) {
+  void runLeft(int speed) {
     left1.spin(vex::directionType::fwd, speed, vex:: velocityUnits::pct);
     left2.spin(vex::directionType::fwd, speed, vex:: velocityUnits::pct);
-    return 1;
   }
-  int runRight(int speed) {
+  void runRight(int speed) {
     left1.spin(vex::directionType::fwd, speed, vex:: velocityUnits::pct);
     left2.spin(vex::directionType::fwd, speed, vex:: velocityUnits::pct);
-    return 1;
   }
 
   int turn(double degrees) {

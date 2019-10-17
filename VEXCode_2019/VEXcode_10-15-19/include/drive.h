@@ -20,17 +20,17 @@ namespace drive {
   /*
     Sets all motors to speed
   */
-  int run(int speed);
+  void run(int speed);
 
   /*
     Sets left motors to speed
   */
-  int runLeft(int speed);
+  void runLeft(int speed);
 
   /*
   Sets right motors to speed
   */
-  int runRight(int speed);
+  void runRight(int speed);
 
   /*
     Turn drivetrain degrees

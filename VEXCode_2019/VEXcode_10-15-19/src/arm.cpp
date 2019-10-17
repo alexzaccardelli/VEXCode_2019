@@ -49,9 +49,11 @@ namespace arm {
         degreesRight = right.rotation(vex::rotationUnits::deg);
       }
       while(!Controller.ButtonR2.pressing() && !Controller.ButtonR1.pressing()) {
+        //Error
         leftError = degreesLeft - left.rotation(vex::rotationUnits::deg);
         rightError = degreesRight - right.rotation(vex::rotationUnits::deg);
 
+        //Speed
         leftSpeed = leftError * kP;
         rightSpeed = rightError * kP;
     
@@ -72,10 +74,10 @@ namespace arm {
     return 1;
   }
 
-  int hold() {
+  int hold(double degrees) {
     stop();
-    double leftError = 0, rightError = 0, kP = 0.5, max = 100, leftSpeed = 0, rightSpeed = 0;
-    int degrees = left.rotation(vex::rotationUnits::deg), delay = 10;
+    double leftError = 0, rightError = 0, kP = 0.5, max = 100, leftSpeed = 0, rightSpeed = 0; //Needs tuning
+    int delay = 10;
     vex::timer timer, closeEnoughTimer;
     closeEnoughTimer.clear(); timer.clear();
     while(true) {

@@ -25,8 +25,10 @@ namespace arm {
 
   /*
     Set left and right encoder to val
+      Defulat parameters:
+        val = 0
   */
-  void setEncoder(double val);
+  void setEncoder(double val = 0);
 
   /*
     Sets arm motors to pow
@@ -51,10 +53,12 @@ namespace arm {
   /*
     Hold left and right at last recorded encoder position
   */
-  int hold();
+  int hold(double degrees = left.rotation(vex::rotationUnits::deg));
 
   /*
     Driver control of arm
+      Default parameters:
+        degrees = left.rotation()
       R1: up
       R2: down
       None: hold motors at last recorded encoder position
