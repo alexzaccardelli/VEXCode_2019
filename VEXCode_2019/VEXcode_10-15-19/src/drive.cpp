@@ -7,7 +7,7 @@ namespace drive {
   vex::motor right2 (vex::PORT4, vex::gearSetting::ratio18_1, true);
   vex::encoder leftEnc (Brain.ThreeWirePort.A);
   vex::encoder rightEnc (Brain.ThreeWirePort.C);
-  const double maxDef=100, kPDef=0.12, cerDef=20, cedDef=200;
+  const double maxDef=100, kPDef=0.12, cerDef=20, cedDef=100;
   
   void reset() {
     left1.stop();
@@ -32,25 +32,26 @@ namespace drive {
     left2.spin(vex::directionType::fwd, speed, vex:: velocityUnits::pct);
   }
   void runRight(int speed) {
-    left1.spin(vex::directionType::fwd, speed, vex:: velocityUnits::pct);
-    left2.spin(vex::directionType::fwd, speed, vex:: velocityUnits::pct);
+    right1.spin(vex::directionType::fwd, speed, vex:: velocityUnits::pct);
+    right2.spin(vex::directionType::fwd, speed, vex:: velocityUnits::pct);
   }
 
   int turn(double degrees) {
     reset();
     vex::timer closeEnoughTimer, timer;
-    double target = 5.46666667 * degrees, kp = 0.3, accel = 1, max = 100, closeEnoughDelay = 300, closeEnoughRange = 3, error = 0, speed = 0;
+    double target = 5.46666667 * degrees, kp = 0.3, accel = 1, max = 100, closeEnoughDelay = 150, closeEnoughRange = 6, error = 0, speed = 0;
     int delay = 10;
     timer.clear();
     closeEnoughTimer.clear();
-    vex::task::sleep(300);
+    //vex::task::sleep(300);
     while(true) {
       //Error
       error = target - left1.rotation(vex::rotationUnits::deg);
 
       //Slew rate
-      if(error * kp > speed)  speed += accel;
-      else                    speed = error * kp;
+      /*if(error * kp > speed)  speed += accel;
+      else                    */speed = error * kp;
+
 
       //Max speed
       if(speed > max)       speed = max;

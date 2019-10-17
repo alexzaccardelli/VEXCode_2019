@@ -10,13 +10,13 @@ int main() {
   roller::reset();
   arm::reset(); 
   
-  //auton::redSmall();
+  auton::redSmall();
   //drive::forward(48);
   //vex::task::sleep(5);
 
   
   //Driver Control Tasks
-  vex::task driveTask(drive::op);
+  /*vex::task driveTask(drive::op);
   vex::task armTask(arm::op);
   vex::task rollerTask(roller::op);
   while(true) {
@@ -25,5 +25,5 @@ int main() {
     if(Controller.ButtonRight.pressing())
       macro::stack(&armTask, &rollerTask, &driveTask);
     vex::task::sleep(5);
-  }
+  }*/
 }

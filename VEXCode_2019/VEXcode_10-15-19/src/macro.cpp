@@ -32,10 +32,10 @@ namespace macro {
     roller::reset();
     //if(arm::left.rotation(vex::rotationUnits::deg) < 50)
       //drive::forward(-1, 100, 0.14, 30, 150); //Was just -1
-    arm::run(80);
+    arm::run(60);
     roller::outake();
     vex::timer timer;
-    while(arm::left.rotation(vex::rotationUnits::deg) < 860 && timer.time() < 1700) {}
+    while(arm::left.rotation(vex::rotationUnits::deg) < 860 && timer.time() < 1500) {}
     arm::stop();
     roller::reset();
     if(a != NULL && b != NULL && c != NULL) {

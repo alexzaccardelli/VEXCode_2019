@@ -76,6 +76,8 @@ namespace arm {
   }
 
   int hold() {
+    arm::degreesLeft = arm::left.rotation(vex::rotationUnits::deg);
+    arm::degreesRight = arm::right.rotation(vex::rotationUnits::deg);
     stop();
     double leftError = 0, rightError = 0, kP = 0.5, max = 100, leftSpeed = 0, rightSpeed = 0; //Needs tuning
     int delay = 10;
