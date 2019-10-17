@@ -7,7 +7,7 @@ namespace macro {
       a->suspend();
       b->suspend();
     }
-    arm::move(170, 100, 0.6, 30, 150); //Was 20 error
+    arm::move(170, 100, 0.6, 30, 150);
     roller::intake();
     while(arm::botLimit.value() == 0)
       arm::run(-100);

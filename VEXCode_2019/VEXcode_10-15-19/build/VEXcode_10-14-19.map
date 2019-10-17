@@ -96,11 +96,11 @@ Discarded input sections
  .llvm_addrsig  0x00000000        0x6 build/src/arm.o
  .text          0x00000000        0x0 build/src/drive.o
  .text._ZN5drive7runLeftEi
-                0x00000000       0x60 build/src/drive.o
+                0x00000000       0x5c build/src/drive.o
  .ARM.exidx.text._ZN5drive7runLeftEi
                 0x00000000        0x8 build/src/drive.o
  .text._ZN5drive8runRightEi
-                0x00000000       0x60 build/src/drive.o
+                0x00000000       0x5c build/src/drive.o
  .ARM.exidx.text._ZN5drive8runRightEi
                 0x00000000        0x8 build/src/drive.o
  .llvm_addrsig  0x00000000        0xa build/src/drive.o
@@ -2059,8 +2059,9 @@ Linker script and memory map
                 0x03800e70       0xb0 build/src/drive.o
                 0x03800e70                drive::reset()
  .text._ZN5drive3runEi
-                0x03800f20       0x98 build/src/drive.o
+                0x03800f20       0x94 build/src/drive.o
                 0x03800f20                drive::run(int)
+ *fill*         0x03800fb4        0x4 
  .text._ZN5drive4turnEd
                 0x03800fb8      0x1c0 build/src/drive.o
                 0x03800fb8                drive::turn(double)

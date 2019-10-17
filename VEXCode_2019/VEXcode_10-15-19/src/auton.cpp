@@ -25,6 +25,8 @@ namespace auton {
   void redSmall() {
     vex::timer timer;
     timer.clear();
+    arm::resetBotLimit();
+    arm::setEncoder(0);
 
     vex::task temp(_smallLift); //Maybe change
     drive::forward(23); //Needs changing
@@ -39,7 +41,7 @@ namespace auton {
 
     for(int i = 0; i < 2; i++) {
       arm::resetBotLimit();
-      temp = vex::task(_smallLift); //Does it need vex::task
+      temp = vex::task(_smallLift);
       drive::forward(5.5);
       temp.stop();
       roller::intake();
@@ -50,10 +52,9 @@ namespace auton {
       roller::reset();
     }
 
-    drive::turn(125); //Was 135
-    //drive::forward(35, 100, 0.14, 30, 150);
+    drive::turn(125);
     drive::run(100);
-    vex::task::sleep(1000);
+    vex::task::sleep(1000); //Needs changing
     drive::reset();
     macro::stack();
 
@@ -65,16 +66,18 @@ namespace auton {
     timer.clear();
     arm::resetBotLimit();
     arm::setEncoder(0);
+
     vex::task temp(_smallLift);
     //vex::task::sleep(300);
-    drive::forward(8, 100, 0.14, 10, 150);
+    drive::forward(8, 100, 0.14, 10, 150); //Needs tuning
     temp.stop();
     roller::intake();
     while(arm::botLimit.value() == 0)
       arm::run(-100);
     vex::task::sleep(400);
-    arm::stop();
+    arm::reset();
     roller::reset();
+
     vex::task temp1(_bigLift);
     vex::task::sleep(350);
     drive::forward(24.5);
@@ -83,6 +86,7 @@ namespace auton {
     _medLift();
     vex::task::sleep(500);
     roller::reset();
+
     drive::forward(-10);
     drive::turn(117);
     drive::forward(13.5, 60, 0.14, 30, 150);
