@@ -30,7 +30,9 @@ namespace auton {
     Forward 22 inches
     Intake 2 cubes
   */
-  void blueBigNew();
+  void blueBig();
+
+  void skills();
 }
 
 #endif
