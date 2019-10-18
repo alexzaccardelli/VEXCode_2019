@@ -16,8 +16,9 @@ namespace auton {
     arm::move(230, 100, 0.6, 20, 200);
     return 1;
   }
+  //change medLift so that it only picks up 2 cubes (not 3)
   int _medLift() {
-    arm::move(0, 100, 0.6, 20, 300);
+    arm::move(90, 100, 0.6, 20, 300);
     return 1;
   }
   int _reallySmallLift() {
@@ -66,7 +67,7 @@ namespace auton {
       roller::reset();
     }
 
-    drive::turn(125);
+    drive::turn(135);
     drive::run(100);
     vex::task::sleep(1600); //Needs changing
     drive::reset();
@@ -129,7 +130,7 @@ namespace auton {
 
     vex::task temp(_reallySmallLift);
     //vex::task::sleep(300);
-    drive::forward(13); //Needs tuning
+    drive::forward(12); //Needs tuning
     temp.stop();
     vex::limit blah(Brain.ThreeWirePort.H);
     roller::intake();
@@ -148,7 +149,7 @@ namespace auton {
     //vex::task::sleep(500);
     roller::reset();
 
-    drive::turn(108);
+    drive::turn(125);
     temp = vex::task(_smallLift);
     drive::forward(13.5);
     roller::intake();
@@ -168,7 +169,7 @@ namespace auton {
     drive::runRight(100);
     drive::runLeft(70);
     vex::task::sleep(850);
-    drive::runRight(50);
+    drive::runRight(80);
     drive::runLeft(100);
     vex::task::sleep(900);
     drive::reset();*/

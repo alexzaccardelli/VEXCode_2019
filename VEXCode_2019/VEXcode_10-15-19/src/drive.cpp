@@ -39,7 +39,7 @@ namespace drive {
   int turn(double degrees) {
     reset();
     vex::timer closeEnoughTimer, timer;
-    double target = 5.46666667 * degrees, kp = 0.3, accel = 1, max = 100, closeEnoughDelay = 150, closeEnoughRange = 6, error = 0, speed = 0;
+    double target = 5.46666667 * degrees, kp = 0.3, accel = 1, max = 100, closeEnoughDelay = 150, closeEnoughRange = 3, error = 0, speed = 0;
     int delay = 10;
     timer.clear();
     closeEnoughTimer.clear();
