@@ -10,7 +10,7 @@ int main() {
   roller::reset();
   arm::reset(); 
   
-  auton::redSmall();
+  auton::blueSmall();
   //drive::forward(48);
   //vex::task::sleep(5);
 

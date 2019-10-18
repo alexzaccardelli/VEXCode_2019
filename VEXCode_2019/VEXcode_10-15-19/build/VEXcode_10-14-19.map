@@ -79,13 +79,17 @@ Discarded input sections
                 0x00000000       0x78 build/src/auton.o
  .ARM.exidx.text._ZN5auton16_reallySmallLiftEv
                 0x00000000        0x8 build/src/auton.o
- .text._ZN5auton9blueSmallEv
+ .text._ZN5auton8redSmallEv
                 0x00000000      0x270 build/src/auton.o
- .ARM.exidx.text._ZN5auton9blueSmallEv
+ .ARM.exidx.text._ZN5auton8redSmallEv
                 0x00000000        0x8 build/src/auton.o
- .text._ZN5auton10blueBigNewEv
+ .text._ZN5auton7blueBigEv
                 0x00000000      0x288 build/src/auton.o
- .ARM.exidx.text._ZN5auton10blueBigNewEv
+ .ARM.exidx.text._ZN5auton7blueBigEv
+                0x00000000        0x8 build/src/auton.o
+ .text._ZN5auton6skillsEv
+                0x00000000      0x388 build/src/auton.o
+ .ARM.exidx.text._ZN5auton6skillsEv
                 0x00000000        0x8 build/src/auton.o
  .llvm_addrsig  0x00000000        0x8 build/src/auton.o
  .text          0x00000000        0x0 build/src/arm.o
@@ -2046,9 +2050,9 @@ Linker script and memory map
  .text._ZN5auton10_smallLiftEv
                 0x03800338       0x78 build/src/auton.o
                 0x03800338                auton::_smallLift()
- .text._ZN5auton8redSmallEv
+ .text._ZN5auton9blueSmallEv
                 0x038003b0      0x270 build/src/auton.o
-                0x038003b0                auton::redSmall()
+                0x038003b0                auton::blueSmall()
  .text._GLOBAL__sub_I_auton.cpp
                 0x03800620       0x34 build/src/auton.o
  .text._ZN3arm5resetEv
@@ -2783,7 +2787,7 @@ Linker script and memory map
  .ARM.exidx.text._ZN5auton10_smallLiftEv
                 0x038035e4        0x0 build/src/auton.o
                                   0x8 (size before relaxing)
- .ARM.exidx.text._ZN5auton8redSmallEv
+ .ARM.exidx.text._ZN5auton9blueSmallEv
                 0x038035e4        0x0 build/src/auton.o
                                   0x8 (size before relaxing)
  .ARM.exidx.text._GLOBAL__sub_I_auton.cpp
