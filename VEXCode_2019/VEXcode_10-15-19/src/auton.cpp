@@ -148,8 +148,22 @@ namespace auton {
     //vex::task::sleep(500);
     roller::reset();
 
+    drive::turn(108);
+    temp = vex::task(_smallLift);
+    drive::forward(13.5);
+    roller::intake();
+    while(arm::botLimit.value() == 0)
+      arm::run(-100);
+    arm::reset();
+    vex::task::sleep(400);
+    roller::reset();
+    drive::runRight(50);
+    drive::runLeft(100);
+    vex::task::sleep(900);
+    drive::reset();
+
     //Change this to not use timing
-    drive::forward(-10);
+    /*drive::forward(-10);
     drive::turn(117);
     drive::runRight(100);
     drive::runLeft(70);
@@ -157,7 +171,7 @@ namespace auton {
     drive::runRight(50);
     drive::runLeft(100);
     vex::task::sleep(900);
-    drive::reset();
+    drive::reset();*/
 
 
     macro::stack();
