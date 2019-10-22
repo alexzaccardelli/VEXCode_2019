@@ -55,18 +55,16 @@ namespace macro {
       c->suspend();
     }
     roller::outake();
-    vex::task::sleep(800);
-    roller::reset();
     //if(arm::left.rotation(vex::rotationUnits::deg) < 50)
       //drive::forward(-1, 100, 0.14, 30, 150); //Was just -1
-    arm::run(60);
-    roller::outake();
-    vex::task::sleep(1100);
+    arm::run(30);
+    roller::outake(-50);
+    vex::task::sleep(2500);
     vex::timer timer;
     
-    arm::run(40);
-    roller::outake(-35);
-    while(arm::left.rotation(vex::rotationUnits::deg) < 860 && timer.time() < 700) {}
+    //arm::run(10);
+    //roller::outake(-25);
+    //while(arm::left.rotation(vex::rotationUnits::deg) < 860 && timer.time() < 1000) {}
     arm::stop();
     roller::reset();
     if(a != NULL && b != NULL && c != NULL) {

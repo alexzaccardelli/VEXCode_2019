@@ -65,11 +65,11 @@ namespace auton {
       roller::reset();
     }
     if(side == 1) drive::turn(130);
-    else drive::turn(-130);
+    else drive::turn(-124);
     drive::run(100);
     vex::task::sleep(1600);
     drive::reset();
-    macro::stackAuton();
+    macro::stack();
 
     Brain.Screen.clearScreen();
     Brain.Screen.setCursor(8, 5);

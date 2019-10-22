@@ -10,7 +10,8 @@ int main() {
   roller::reset();
   arm::reset(); 
 
-  auton::small(auton::red);
+  auton::small(auton::blue);
+  //macro::stack();
   //drive::turn(180);
   
   //Driver Control Tasks
