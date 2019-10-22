@@ -2,9 +2,14 @@
 #define _AUTON_H_
 
 namespace auton {
-  void blueBig();
-  void blueSmall();
-  void redBig();
+  enum {
+    red = 1,
+    blue = 2
+  };
+  void big(int side);
+  void small(int side);
+  //void blueSmall();
+  //void redBig();
 
   /*
     _smallLift();
@@ -20,7 +25,7 @@ namespace auton {
     Forward at 100% for 1 second
     Stack 4 cubes
   */
-  void redSmall();
+  //void redSmall();
 
   /*
     Arm to 200 degrees
@@ -30,7 +35,7 @@ namespace auton {
     Forward 22 inches
     Intake 2 cubes
   */
-  void blueBig();
+  //void blueBig();
 
   void skills();
 }

@@ -119,6 +119,80 @@ namespace drive {
     return 1;
   }
 
+  int leftForward(double inches, double max, double kP, double closeEnoughRange, double closeEnoughDelay) {
+    reset();
+    vex::timer closeEnoughTimer, timer;
+    double leftSpeed = 0, delay = 10; //was 10 delay
+    double target = 41.66966 * inches, leftKp = kP, leftError = 0.0, accel = 0.8;
+    //leftEnc.setRotation(0, vex::rotationUnits::deg);
+    vex::task::sleep(300);
+    closeEnoughTimer.clear(); timer.clear();
+    while(true) {
+      //Error
+      leftError = target - leftEnc.rotation(vex::rotationUnits::deg);
+
+      //Slew rate
+      if(leftError * leftKp > leftSpeed) leftSpeed += accel;
+      else leftSpeed = leftError * leftKp;
+
+      //Max speed
+      if(leftSpeed > max) leftSpeed = max;
+      else if(leftSpeed < -max) leftSpeed = -max;
+
+      //End condition
+      if(abs((int)leftError) > closeEnoughRange)
+        closeEnoughTimer.clear();
+      if(closeEnoughTimer.time() > closeEnoughDelay)
+        break;
+
+      //Motor power
+      left1.spin(vex::directionType::fwd, leftSpeed, vex:: velocityUnits::pct);
+      left2.spin(vex::directionType::fwd, leftSpeed, vex:: velocityUnits::pct);
+
+      //Delay
+      vex::task::sleep(delay);
+    }
+    reset();
+    return 1;
+  }
+
+  int rightForward(double inches, double max, double kP, double closeEnoughRange, double closeEnoughDelay) {
+    reset();
+    vex::timer closeEnoughTimer, timer;
+    double rightSpeed = 0, delay = 10; //was 10 delay
+    double target = 41.66966 * inches, rightKp = kP, rightError = 0.0, accel = 0.8;
+    //rightEnc.setRotation(0, vex::rotationUnits::deg);
+    vex::task::sleep(300);
+    closeEnoughTimer.clear(); timer.clear();
+    while(true) {
+      //Error
+      rightError = target - rightEnc.rotation(vex::rotationUnits::deg);
+
+      //Slew rate
+      if(rightError * rightKp > rightSpeed) rightSpeed += accel;
+      else rightSpeed = rightError * rightKp;
+
+      //Max speed
+      if(rightSpeed > max) rightSpeed = max;
+      else if(rightSpeed < -max) rightSpeed = -max;
+
+      //End condition
+      if(abs((int)rightError) > closeEnoughRange)
+        closeEnoughTimer.clear();
+      if(closeEnoughTimer.time() > closeEnoughDelay)
+        break;
+
+      //Motor power
+      right1.spin(vex::directionType::fwd, rightSpeed, vex:: velocityUnits::pct);
+      right2.spin(vex::directionType::fwd, rightSpeed, vex:: velocityUnits::pct);
+
+      //Delay
+      vex::task::sleep(delay);
+    }
+    reset();
+    return 1;
+  }
+
   int op() {
     int left1Speed = 0, left2Speed = 0, right1Speed = 0, right2Speed = 0, delay = 0;
     int extendedArmMaxSpeed = 40, extendedArmThresh = 400, extendedArmDelay = 10, normalDelay = 5;

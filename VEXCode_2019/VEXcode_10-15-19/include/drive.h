@@ -61,6 +61,11 @@ namespace drive {
     Includes acceleration cap
     Includes reduced speed dependent on arm height
   */
+
+  int rightForward(double inches, double max=maxDef, double kP=kPDef, double closeEnoughRange=cerDef, double closeEnoughDelay=cedDef);
+  int leftForward(double inches, double max=maxDef, double kP=kPDef, double closeEnoughRange=cerDef, double closeEnoughDelay=cedDef);
+
+  
   int op();
 }
 
