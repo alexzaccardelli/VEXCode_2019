@@ -64,8 +64,8 @@ namespace auton {
       vex::task::sleep(700);
       roller::reset();
     }
-    if(side == 1) drive::turn(125);
-    else drive::turn(-125);
+    if(side == 1) drive::turn(130);
+    else drive::turn(-130);
     drive::run(100);
     vex::task::sleep(1600);
     drive::reset();

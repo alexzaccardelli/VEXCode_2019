@@ -10,8 +10,8 @@ int main() {
   roller::reset();
   arm::reset(); 
 
-  auton::big(auton::blue);
-  //drive::forward(48);
+  auton::small(auton::red);
+  //drive::turn(180);
   
   //Driver Control Tasks
   /*vex::task driveTask(drive::op);
