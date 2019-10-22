@@ -33,6 +33,8 @@ namespace roller {
       B: outake
   */
   int op();
+
+  void run(int speed);
 }
 
 #endif

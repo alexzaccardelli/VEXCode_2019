@@ -69,7 +69,7 @@ namespace auton {
     drive::run(100);
     vex::task::sleep(1600);
     drive::reset();
-    macro::stack();
+    macro::stackAuton();
 
     Brain.Screen.clearScreen();
     Brain.Screen.setCursor(8, 5);
@@ -120,7 +120,7 @@ namespace auton {
     drive::runRight(50);
     drive::runLeft(100);
     
-    vex::task::sleep(900);
+    vex::task::sleep(800);
     drive::reset();
 
     //Change this to not use timing
