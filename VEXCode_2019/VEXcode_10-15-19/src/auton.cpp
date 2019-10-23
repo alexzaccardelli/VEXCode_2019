@@ -69,7 +69,7 @@ namespace auton {
     drive::run(100);
     vex::task::sleep(1600);
     drive::reset();
-    macro::stack();
+    macro::stackAuton();
 
     Brain.Screen.clearScreen();
     Brain.Screen.setCursor(8, 5);

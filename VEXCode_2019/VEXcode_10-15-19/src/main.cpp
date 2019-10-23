@@ -10,12 +10,18 @@ int main() {
   roller::reset();
   arm::reset(); 
 
-  auton::small(auton::blue);
+  vex::limit blah(Brain.ThreeWirePort.H);
+  arm::run(-100);
+  while(blah.value() == 0) {}
+  arm::reset();
+  arm::move(500);
+  arm::hold();
+  //auton::small(auton::red);
   //macro::stack();
   //drive::turn(180);
   
   //Driver Control Tasks
-  /*vex::task driveTask(drive::op);
+  vex::task driveTask(drive::op);
   vex::task armTask(arm::op);
   vex::task rollerTask(roller::op);
   while(true) {
@@ -24,5 +30,5 @@ int main() {
     if(Controller.ButtonRight.pressing())
       macro::stack(&armTask, &rollerTask, &driveTask);
     vex::task::sleep(5);
-  }*/
+  }
 }
