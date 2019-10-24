@@ -83,7 +83,7 @@ namespace auton {
     arm::setEncoder(0);
 
     vex::task temp(_reallySmallLift);
-    drive::forward(13);
+    drive::forward(13, 100, 0.12, 25, 100);
     temp.stop();
     vex::limit blah(Brain.ThreeWirePort.H);
     roller::intake();
@@ -95,17 +95,19 @@ namespace auton {
 
     vex::task temp1(_bigLift);
     vex::task::sleep(350);
-    drive::forward(22.5);
+    drive::forward(22.5, 100, 0.12, 25, 100);
     temp1.stop();
     roller::intake();
-    _medLift();
+    arm::move(260, 100, 0.6, 20, 150); //changing
     roller::reset();
+    arm::move(280, 100, 0.6, 20, 150);//changing
 
-    drive::forward(-10);
-    if(side == 1) drive::turn(-108);
-    else drive::turn(108);
+    drive::forward(-5);
     temp = vex::task(_smallLift);
-    drive::forward(13.5);
+    if(side == 1) drive::turn(-108, 60);//changing
+    else drive::turn(108, 60); //changing
+    
+    drive::forward(18.5);
     roller::intake();
     arm::run(-100);
     while(arm::botLimit.value() == 0) {}
@@ -146,7 +148,7 @@ namespace auton {
   void skills() {
     big(blue);
     
-    drive::forward(-5);
+    drive::forward(-10);
     drive::turn(-135);
     drive::forward(72);
     drive::turn(-90);

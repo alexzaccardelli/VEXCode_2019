@@ -8,6 +8,7 @@ namespace drive {
   vex::encoder leftEnc (Brain.ThreeWirePort.A);
   vex::encoder rightEnc (Brain.ThreeWirePort.C);
   const double maxDef=100, kPDef=0.12, cerDef=20, cedDef=100;
+  const double maxDef1=100, kPDef1=0.3, cerDef1=6, cedDef1=150;
   
   void reset() {
     left1.stop();
@@ -36,10 +37,10 @@ namespace drive {
     right2.spin(vex::directionType::fwd, speed, vex:: velocityUnits::pct);
   }
 
-  int turn(double degrees) {
+  int turn(double degrees, double max, double kP, double closeEnoughRange, double closeEnoughDelay) {
     reset();
     vex::timer closeEnoughTimer, timer;
-    double target = 5.46666667 * degrees, kp = 0.3, accel = 1, max = 100, closeEnoughDelay = 150, closeEnoughRange = 6, error = 0, speed = 0;
+    double target = 5.46666667 * degrees, kp = 0.3, accel = 1, error = 0, speed = 0;
     int delay = 10;
     timer.clear();
     closeEnoughTimer.clear();

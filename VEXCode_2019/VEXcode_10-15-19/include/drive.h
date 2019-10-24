@@ -9,6 +9,7 @@ namespace drive {
 
   //Default parameters for forward()
   extern const double maxDef, kPDef, cerDef, cedDef;
+  extern const double maxDef1, kPDef1, cerDef1, cedDef1;
   
   /*
     Stops all motors
@@ -41,7 +42,7 @@ namespace drive {
         closeEnoughDelay = 300
     Includes acceleration cap
   */
-  int turn(double degrees);
+  int turn(double degrees, double max=maxDef1, double kP=kPDef1, double closeEnoughRange=cerDef1, double closeEnoughDelay=cedDef1);
 
   /*
     Forward inches using p-controller
