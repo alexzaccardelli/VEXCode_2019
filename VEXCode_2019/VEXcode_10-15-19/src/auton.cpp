@@ -32,6 +32,13 @@ namespace auton {
     drive::leftForward(15);
     return 1;
   }
+  int runToBot() {
+    vex::limit blah(Brain.ThreeWirePort.H);
+    arm::run(-100);
+    while(blah.value() == 0) {}
+    arm::reset();
+    return 1;
+  }
 
   void small(int side) {
     vex::timer timer;
@@ -146,18 +153,27 @@ namespace auton {
 
   //32 point skills
   void skills() {
-    big(blue);
+    vex::timer t;
+    //big(blue);
     
     drive::forward(-10);
-    drive::turn(-135);
-    drive::forward(72);
-    drive::turn(-90);
-
-    vex::task temp(_bigLift);
-    vex::task::sleep(350);
-    drive::forward(24);
+    vex::task::sleep(300);
+    drive::turn(-146, 60);
+    vex::task temp(runToBot);
+    drive::forward(61);
     temp.stop();
-    vex::limit blah(Brain.ThreeWirePort.H);
+    drive::turn(-90);
+    drive::run(-100);
+    vex::task::sleep(500);
+    drive::reset();
+    temp = vex::task(_bigLift);
+    drive::forward(29.5);
+    temp.stop();
+    roller::intake();
+    _medLift();
+    vex::task::sleep(300);
+
+    /* kovex::limit blah(Brain.ThreeWirePort.H);
     arm::run(-100);
     while(blah.value() == 0) {}
     arm::reset();
@@ -210,6 +226,10 @@ namespace auton {
     roller::outake();
     vex::task::sleep(400);
     roller::reset();
-    //Lift arm to prevent descoring tower cubes
+    //Lift arm to prevent descoring tower cubes*/
+
+    Brain.Screen.clearScreen();
+    Brain.Screen.setCursor(5, 5);
+    Brain.Screen.print(t.time());
   }
 }
