@@ -24,14 +24,7 @@ namespace auton {
     arm::move(180, 100, 0.6, 20, 200);
     return 1;
   }
-  int _rightCurve() {
-    drive::rightForward(30);
-    return 1;
-  }
-  int _leftCurve() {
-    drive::leftForward(15);
-    return 1;
-  }
+  
   int runToBot() {
     vex::limit blah(Brain.ThreeWirePort.H);
     arm::run(-100);
@@ -122,10 +115,6 @@ namespace auton {
     vex::task::sleep(400);
     roller::reset();
 
-    /*vex::task temp2(_rightCurve);
-    drive::leftForward(15);
-    temp2.stop();*/
-
     drive::runRight(50);
     drive::runLeft(100);
     
@@ -159,9 +148,11 @@ namespace auton {
     drive::forward(-10);
     vex::task::sleep(300);
     drive::turn(-146, 60);
+
     vex::task temp(runToBot);
     drive::forward(61);
     temp.stop();
+
     drive::turn(-90);
     drive::run(-100);
     vex::task::sleep(500);
@@ -169,11 +160,12 @@ namespace auton {
     temp = vex::task(_bigLift);
     drive::forward(29.5);
     temp.stop();
+
     roller::intake();
     _medLift();
     vex::task::sleep(300);
 
-    /* kovex::limit blah(Brain.ThreeWirePort.H);
+    /*vex::limit blah(Brain.ThreeWirePort.H);
     arm::run(-100);
     while(blah.value() == 0) {}
     arm::reset();
