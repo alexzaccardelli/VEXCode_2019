@@ -95,7 +95,7 @@ namespace auton {
 
     vex::task temp1(_bigLift);
     vex::task::sleep(350);
-    drive::forward(22.5, 100, 0.12, 25, 100);
+    drive::forward(22.5, 60, 0.12, 25, 100);
     temp1.stop();
     roller::intake();
     arm::move(260, 100, 0.6, 20, 150); //changing
@@ -103,11 +103,12 @@ namespace auton {
     arm::move(280, 100, 0.6, 20, 150);//changing
 
     drive::forward(-5);
+    vex::task::sleep(200);
     temp = vex::task(_smallLift);
-    if(side == 1) drive::turn(-108, 60);//changing
-    else drive::turn(108, 60); //changing
+    if(side == 1) drive::turn(-120, 60);//changing
+    else drive::turn(120, 60); //changing
     
-    drive::forward(18.5);
+    drive::forward(21.5);
     roller::intake();
     arm::run(-100);
     while(arm::botLimit.value() == 0) {}
@@ -143,11 +144,19 @@ namespace auton {
   //32 point skills
   void skills() {
     vex::timer t;
-    //big(blue);
+    big(blue);
+    vex::task::sleep(500);
     
-    drive::forward(-10);
+    drive::runRight(-100);
+    drive::right1.spin(vex::directionType::fwd, 100, vex:: velocityUnits::pct);
+    drive::left2.spin(vex::directionType::fwd, 100, vex:: velocityUnits::pct);
+    drive::right2.spin(vex::directionType::fwd, -100, vex:: velocityUnits::pct);
+    drive::left1.spin(vex::directionType::fwd, -100, vex:: velocityUnits::pct);
     vex::task::sleep(300);
-    drive::turn(-146, 60);
+    drive::reset();
+    /*drive::forward(-10);
+    vex::task::sleep(300);
+    drive::turn(-146, 60);*/
 
     vex::task temp(runToBot);
     drive::forward(61);
