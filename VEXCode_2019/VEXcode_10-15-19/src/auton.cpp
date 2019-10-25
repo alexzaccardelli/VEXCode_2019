@@ -148,6 +148,8 @@ namespace auton {
     vex::task::sleep(500);
     
     drive::runRight(-100);
+    vex::task::sleep(600);
+    drive::forward(-5);
     drive::right1.spin(vex::directionType::fwd, 100, vex:: velocityUnits::pct);
     drive::left2.spin(vex::directionType::fwd, 100, vex:: velocityUnits::pct);
     drive::right2.spin(vex::directionType::fwd, -100, vex:: velocityUnits::pct);
