@@ -10,7 +10,7 @@ int main() {
   drive::reset();
   roller::reset();
   arm::reset(); 
-
+  //drive::forward(-61);
   /*vex::limit blah(Brain.ThreeWirePort.H);
   arm::run(-100);
   while(blah.value() == 0) {}
@@ -18,7 +18,11 @@ int main() {
   arm::move(500);
   arm::hold();*/
   //drive::turn(108);
-  auton::skills();
+  //auton::skills();c
+  vex::task temp (drive::gyroValue);
+  drive::gyro.calibrate();
+  vex::task::sleep(1500);
+  drive::turn1(90, 100);
   
   //macro::stack();
   //drive::turn(180);

@@ -6,6 +6,7 @@ namespace drive {
   //Global access
   extern vex::motor left1, right1, left2, right2;
   extern vex::encoder leftEnc, rightEnc;
+  extern vex::gyro gyro;
 
   //Default parameters for forward()
   extern const double maxDef, kPDef, cerDef, cedDef;
@@ -43,7 +44,8 @@ namespace drive {
     Includes acceleration cap
   */
   int turn(double degrees, double max=maxDef1, double kP=kPDef1, double closeEnoughRange=cerDef1, double closeEnoughDelay=cedDef1);
-
+  int turn1(double degrees, double max);
+  int gyroValue();
   /*
     Forward inches using p-controller
       Default parameters:

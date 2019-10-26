@@ -7,8 +7,10 @@ namespace drive {
   vex::motor right2 (vex::PORT4, vex::gearSetting::ratio18_1, true);
   vex::encoder leftEnc (Brain.ThreeWirePort.A);
   vex::encoder rightEnc (Brain.ThreeWirePort.C);
+  vex::gyro gyro (Brain.ThreeWirePort.F);
   const double maxDef=100, kPDef=0.12, cerDef=20, cedDef=100;
   const double maxDef1=100, kPDef1=0.3, cerDef1=6, cedDef1=150;
+  double gyroVal = 0;
   
   void reset() {
     left1.stop();
@@ -90,10 +92,18 @@ namespace drive {
       rightError = target - leftEnc.rotation(vex::rotationUnits::deg);
 
       //Slew rate
-      if(leftError * leftKp > leftSpeed) leftSpeed += accel;
-      else leftSpeed = leftError * leftKp;
-      if(rightError * rightKp > rightSpeed) rightSpeed += accel;
-      else rightSpeed = rightError * rightKp;
+      if(inches > 0) {
+        if(leftError * leftKp > leftSpeed) leftSpeed += accel;
+        else leftSpeed = leftError * leftKp;
+        if(rightError * rightKp > rightSpeed) rightSpeed += accel;
+        else rightSpeed = rightError * rightKp;
+      }
+      else {
+        if(leftError * leftKp < leftSpeed) leftSpeed -= accel;
+        else leftSpeed = leftError * leftKp;
+        if(rightError * rightKp < rightSpeed) rightSpeed -= accel;
+        else rightSpeed = rightError * rightKp;
+      }
 
       //Max speed
       if(leftSpeed > max) leftSpeed = max;
@@ -241,6 +251,56 @@ namespace drive {
       //delay
       vex::task::sleep(delay);
     }
+    return 1;
+  }
+  int gyroValue() {
+    double last = 0;
+    while(true) {
+      //if(abs((int)last - (int)gyro.angle()) > 5)
+        gyroVal += gyro.value(vex::rotationUnits::deg) - last;
+      last = gyro.value(vex::rotationUnits::deg);
+      vex::task::sleep(20);
+    }
+    return 1;
+  }
+  int turn1(double degrees, double max) {
+    reset();
+    vex::timer closeEnoughTimer, timer;
+    double target = 10 * degrees, kp = 0.111, accel = 1, error = 0, speed = 0, closeEnoughDelay = 150, closeEnoughRange = 300;
+    int delay = 10;
+    timer.clear();
+    closeEnoughTimer.clear();
+    //vex::task::sleep(300);
+    while(true) {
+      //Error
+      error = target - gyroVal;
+
+      //Slew rate
+      /*if(error * kp > speed)  speed += accel;
+      else                    */speed = error * kp;
+
+
+      //Max speed
+      if(speed > max)       speed = max;
+      else if(speed < -max) speed = -max;
+
+      //End condition
+      if(abs((int)error) > closeEnoughRange)          closeEnoughTimer.clear();
+      if(closeEnoughTimer.time() > closeEnoughDelay)  break;
+
+      //Motor power
+      left1.spin(vex::directionType::fwd, -speed, vex:: velocityUnits::pct);
+      left2.spin(vex::directionType::fwd, -speed, vex:: velocityUnits::pct);
+      right1.spin(vex::directionType::fwd, speed, vex:: velocityUnits::pct);
+      right2.spin(vex::directionType::fwd, speed, vex:: velocityUnits::pct);
+
+      //Delay
+      vex::task::sleep(delay);
+      Controller.Screen.clearScreen();
+      Controller.Screen.setCursor(1,1);
+      Controller.Screen.print("%f", gyroVal);
+    }
+    reset();
     return 1;
   }
 }

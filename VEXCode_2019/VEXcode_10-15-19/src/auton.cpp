@@ -32,6 +32,14 @@ namespace auton {
     arm::reset();
     return 1;
   }
+  int specialRunToBot() {
+    vex::task::sleep(700);
+    vex::limit blah(Brain.ThreeWirePort.H);
+    arm::run(-100);
+    while(blah.value() == 0) {}
+    arm::reset();
+    return 1;
+  }
 
   void small(int side) {
     vex::timer timer;
@@ -105,10 +113,12 @@ namespace auton {
     drive::forward(-5);
     vex::task::sleep(200);
     temp = vex::task(_smallLift);
-    if(side == 1) drive::turn(-120, 60);//changing
-    else drive::turn(120, 60); //changing
+    vex::task::sleep(200);
+    if(side == 1) drive::turn(-108, 60);//changing
+    else drive::turn(108, 60); //changing
     
-    drive::forward(21.5);
+    
+    drive::forward(21.5, 50);
     roller::intake();
     arm::run(-100);
     while(arm::botLimit.value() == 0) {}
@@ -142,30 +152,62 @@ namespace auton {
 
 
   //32 point skills
+
+  int luca() {
+    arm::move(250, 100, 0.6, 20, 300);
+    return 1;
+  }
   void skills() {
     vex::timer t;
     big(blue);
-    vex::task::sleep(500);
+    vex::task::sleep(200);
     
     drive::runRight(-100);
-    vex::task::sleep(600);
-    drive::forward(-5);
+    drive::left2.spin(vex::directionType::fwd, 70, vex:: velocityUnits::pct);
+    drive::left1.spin(vex::directionType::fwd, -10, vex:: velocityUnits::pct);
+    vex::task::sleep(400);
+    drive::reset();
+    vex::task::sleep(200);
+    //drive::forward(-5);
     drive::right1.spin(vex::directionType::fwd, 100, vex:: velocityUnits::pct);
     drive::left2.spin(vex::directionType::fwd, 100, vex:: velocityUnits::pct);
     drive::right2.spin(vex::directionType::fwd, -100, vex:: velocityUnits::pct);
     drive::left1.spin(vex::directionType::fwd, -100, vex:: velocityUnits::pct);
-    vex::task::sleep(300);
+    vex::task::sleep(1000);
     drive::reset();
-    /*drive::forward(-10);
-    vex::task::sleep(300);
-    drive::turn(-146, 60);*/
+    vex::task::sleep(200);
 
-    vex::task temp(runToBot);
-    drive::forward(61);
+    drive::turn(-15);
+    //drive::forward(-10);
+    //vex::task::sleep(300);
+    //drive::turn(-146, 60);
+
+    vex::task temp(specialRunToBot);
+    drive::forward(-68);
     temp.stop();
 
-    drive::turn(-90);
-    drive::run(-100);
+    drive::turn(98);
+    temp = vex::task(_bigLift);
+    vex::task::sleep(800);
+    drive::forward(15);
+    roller::intake();
+    arm::move(100, 100, 0.6, 20, 300);
+    roller::reset();
+    drive::forward(-5, 50);
+    drive::turn(102, 70);
+    vex::task dumb(luca);
+    drive::forward(24, 55);
+    dumb.stop();
+    roller::intake();
+    runToBot();
+    vex::task::sleep(700);
+    drive::runLeft(100);
+    drive::runRight(55);
+    vex::task::sleep(800);
+    roller::reset();
+    drive::reset();
+    macro::stack();
+    /*drive::run(-100);
     vex::task::sleep(500);
     drive::reset();
     temp = vex::task(_bigLift);
