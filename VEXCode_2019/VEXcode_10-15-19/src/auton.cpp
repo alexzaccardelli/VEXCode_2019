@@ -73,7 +73,7 @@ namespace auton {
       roller::reset();
     }
     if(side == 1) drive::turn(130);
-    else drive::turn(-124);
+    else drive::turn(-130);
     drive::run(100);
     vex::task::sleep(1600);
     drive::reset();
@@ -82,6 +82,21 @@ namespace auton {
     Brain.Screen.clearScreen();
     Brain.Screen.setCursor(8, 5);
     Brain.Screen.print(timer.time());
+  }
+  void newBig() {
+    vex::timer timer;
+    arm::setEncoder(0);
+    vex::task temp(_bigLift);
+    drive::forward(0);
+    roller::intake();
+    runToBot();
+    vex::task::sleep(500);
+    roller::reset();
+    drive::turn(180);
+    drive::forward(0);
+    drive::run(100);
+    vex::task::sleep(500);
+    macro::stack();
   }
 
   void big(int side) {
@@ -112,7 +127,7 @@ namespace auton {
 
     drive::forward(-5);
     vex::task::sleep(200);
-    temp = vex::task(_smallLift);
+    temp = vex::task(_reallySmallLift);
     vex::task::sleep(200);
     if(side == 1) drive::turn(-108, 60);//changing
     else drive::turn(108, 60); //changing
@@ -177,10 +192,7 @@ namespace auton {
     drive::reset();
     vex::task::sleep(200);
 
-    drive::turn(-15);
-    //drive::forward(-10);
-    //vex::task::sleep(300);
-    //drive::turn(-146, 60);
+    drive::turn(-10, 100, 0.3, 4, 250); //Changed (-15)
 
     vex::task temp(specialRunToBot);
     drive::forward(-68);
@@ -207,71 +219,6 @@ namespace auton {
     roller::reset();
     drive::reset();
     macro::stack();
-    /*drive::run(-100);
-    vex::task::sleep(500);
-    drive::reset();
-    temp = vex::task(_bigLift);
-    drive::forward(29.5);
-    temp.stop();
-
-    roller::intake();
-    _medLift();
-    vex::task::sleep(300);
-
-    /*vex::limit blah(Brain.ThreeWirePort.H);
-    arm::run(-100);
-    while(blah.value() == 0) {}
-    arm::reset();
-    vex::task::sleep(700);
-    roller::reset();
-
-    // ** Drive to goal zone idk how rn **
-
-    macro::stack();
-    drive::forward(-5);
-    drive::turn(-135);
-    drive::forward(2);
-    vex::limit blah1(Brain.ThreeWirePort.H);
-    arm::run(-100);
-    while(blah1.value() == 0) {}
-    arm::reset();
-    vex::task::sleep(700);
-    roller::reset();
-    
-    drive::turn(-100);
-    //Task to lift to small tower
-    drive::forward(50);
-    roller::outake();
-    vex::task::sleep(400);
-    roller::reset();
-    drive::forward(-24);
-    //Task to lift to 3 cube stack
-    drive::turn(100);
-    drive::forward(12);
-    vex::limit blah2(Brain.ThreeWirePort.H);
-    arm::run(-100);
-    while(blah2.value() == 0) {}
-    arm::reset();
-    vex::task::sleep(700);
-    roller::reset();
-    drive::turn(90);
-    //Task to lift to big tower
-    drive::forward(24);
-    roller::outake();
-    vex::task::sleep(400);
-    roller::reset();
-    //Task to lift to small tower
-    drive::turn(75);
-    drive::forward(26);
-    roller::outake();
-    vex::task::sleep(400);
-    roller::reset();
-    drive::turn(100);
-    drive::forward(52);
-    roller::outake();
-    vex::task::sleep(400);
-    roller::reset();
-    //Lift arm to prevent descoring tower cubes*/
 
     Brain.Screen.clearScreen();
     Brain.Screen.setCursor(5, 5);

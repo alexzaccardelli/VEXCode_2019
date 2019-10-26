@@ -8,6 +8,7 @@ namespace auton {
   };
   void big(int side);
   void small(int side);
+  void newBig();
   //void blueSmall();
   //void redBig();
 

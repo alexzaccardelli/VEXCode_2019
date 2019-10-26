@@ -7,10 +7,8 @@ namespace drive {
   vex::motor right2 (vex::PORT4, vex::gearSetting::ratio18_1, true);
   vex::encoder leftEnc (Brain.ThreeWirePort.A);
   vex::encoder rightEnc (Brain.ThreeWirePort.C);
-  vex::gyro gyro (Brain.ThreeWirePort.F);
   const double maxDef=100, kPDef=0.12, cerDef=20, cedDef=100;
   const double maxDef1=100, kPDef1=0.3, cerDef1=6, cedDef1=150;
-  double gyroVal = 0;
   
   void reset() {
     left1.stop();
@@ -42,19 +40,15 @@ namespace drive {
   int turn(double degrees, double max, double kP, double closeEnoughRange, double closeEnoughDelay) {
     reset();
     vex::timer closeEnoughTimer, timer;
-    double target = 5.46666667 * degrees, kp = 0.3, accel = 1, error = 0, speed = 0;
+    double target = 5.46666667 * degrees, kp = 0.3, error = 0, speed = 0;
     int delay = 10;
     timer.clear();
     closeEnoughTimer.clear();
-    //vex::task::sleep(300);
     while(true) {
       //Error
       error = target - left1.rotation(vex::rotationUnits::deg);
 
-      //Slew rate
-      /*if(error * kp > speed)  speed += accel;
-      else                    */speed = error * kp;
-
+      speed = error * kp;
 
       //Max speed
       if(speed > max)       speed = max;
@@ -118,9 +112,9 @@ namespace drive {
         break;
 
       //Motor power
-      left1.spin(vex::directionType::fwd, leftSpeed, vex:: velocityUnits::pct);
+      left1.spin(vex::directionType::fwd, leftSpeed * 0.8, vex:: velocityUnits::pct);
       left2.spin(vex::directionType::fwd, leftSpeed, vex:: velocityUnits::pct);
-      right1.spin(vex::directionType::fwd, rightSpeed, vex:: velocityUnits::pct);
+      right1.spin(vex::directionType::fwd, rightSpeed * 0.8, vex:: velocityUnits::pct);
       right2.spin(vex::directionType::fwd, rightSpeed, vex:: velocityUnits::pct);
 
       //Delay
@@ -130,79 +124,6 @@ namespace drive {
     return 1;
   }
 
-  int leftForward(double inches, double max, double kP, double closeEnoughRange, double closeEnoughDelay) {
-    reset();
-    vex::timer closeEnoughTimer, timer;
-    double leftSpeed = 0, delay = 10; //was 10 delay
-    double target = 41.66966 * inches, leftKp = kP, leftError = 0.0, accel = 0.8;
-    //leftEnc.setRotation(0, vex::rotationUnits::deg);
-    vex::task::sleep(300);
-    closeEnoughTimer.clear(); timer.clear();
-    while(true) {
-      //Error
-      leftError = target - leftEnc.rotation(vex::rotationUnits::deg);
-
-      //Slew rate
-      if(leftError * leftKp > leftSpeed) leftSpeed += accel;
-      else leftSpeed = leftError * leftKp;
-
-      //Max speed
-      if(leftSpeed > max) leftSpeed = max;
-      else if(leftSpeed < -max) leftSpeed = -max;
-
-      //End condition
-      if(abs((int)leftError) > closeEnoughRange)
-        closeEnoughTimer.clear();
-      if(closeEnoughTimer.time() > closeEnoughDelay)
-        break;
-
-      //Motor power
-      left1.spin(vex::directionType::fwd, leftSpeed, vex:: velocityUnits::pct);
-      left2.spin(vex::directionType::fwd, leftSpeed, vex:: velocityUnits::pct);
-
-      //Delay
-      vex::task::sleep(delay);
-    }
-    reset();
-    return 1;
-  }
-
-  int rightForward(double inches, double max, double kP, double closeEnoughRange, double closeEnoughDelay) {
-    reset();
-    vex::timer closeEnoughTimer, timer;
-    double rightSpeed = 0, delay = 10; //was 10 delay
-    double target = 41.66966 * inches, rightKp = kP, rightError = 0.0, accel = 0.8;
-    //rightEnc.setRotation(0, vex::rotationUnits::deg);
-    vex::task::sleep(300);
-    closeEnoughTimer.clear(); timer.clear();
-    while(true) {
-      //Error
-      rightError = target - rightEnc.rotation(vex::rotationUnits::deg);
-
-      //Slew rate
-      if(rightError * rightKp > rightSpeed) rightSpeed += accel;
-      else rightSpeed = rightError * rightKp;
-
-      //Max speed
-      if(rightSpeed > max) rightSpeed = max;
-      else if(rightSpeed < -max) rightSpeed = -max;
-
-      //End condition
-      if(abs((int)rightError) > closeEnoughRange)
-        closeEnoughTimer.clear();
-      if(closeEnoughTimer.time() > closeEnoughDelay)
-        break;
-
-      //Motor power
-      right1.spin(vex::directionType::fwd, rightSpeed, vex:: velocityUnits::pct);
-      right2.spin(vex::directionType::fwd, rightSpeed, vex:: velocityUnits::pct);
-
-      //Delay
-      vex::task::sleep(delay);
-    }
-    reset();
-    return 1;
-  }
 
   int op() {
     int left1Speed = 0, left2Speed = 0, right1Speed = 0, right2Speed = 0, delay = 0;
@@ -251,56 +172,6 @@ namespace drive {
       //delay
       vex::task::sleep(delay);
     }
-    return 1;
-  }
-  int gyroValue() {
-    double last = 0;
-    while(true) {
-      //if(abs((int)last - (int)gyro.angle()) > 5)
-        gyroVal += gyro.value(vex::rotationUnits::deg) - last;
-      last = gyro.value(vex::rotationUnits::deg);
-      vex::task::sleep(20);
-    }
-    return 1;
-  }
-  int turn1(double degrees, double max) {
-    reset();
-    vex::timer closeEnoughTimer, timer;
-    double target = 10 * degrees, kp = 0.111, accel = 1, error = 0, speed = 0, closeEnoughDelay = 150, closeEnoughRange = 300;
-    int delay = 10;
-    timer.clear();
-    closeEnoughTimer.clear();
-    //vex::task::sleep(300);
-    while(true) {
-      //Error
-      error = target - gyroVal;
-
-      //Slew rate
-      /*if(error * kp > speed)  speed += accel;
-      else                    */speed = error * kp;
-
-
-      //Max speed
-      if(speed > max)       speed = max;
-      else if(speed < -max) speed = -max;
-
-      //End condition
-      if(abs((int)error) > closeEnoughRange)          closeEnoughTimer.clear();
-      if(closeEnoughTimer.time() > closeEnoughDelay)  break;
-
-      //Motor power
-      left1.spin(vex::directionType::fwd, -speed, vex:: velocityUnits::pct);
-      left2.spin(vex::directionType::fwd, -speed, vex:: velocityUnits::pct);
-      right1.spin(vex::directionType::fwd, speed, vex:: velocityUnits::pct);
-      right2.spin(vex::directionType::fwd, speed, vex:: velocityUnits::pct);
-
-      //Delay
-      vex::task::sleep(delay);
-      Controller.Screen.clearScreen();
-      Controller.Screen.setCursor(1,1);
-      Controller.Screen.print("%f", gyroVal);
-    }
-    reset();
     return 1;
   }
 }
