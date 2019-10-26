@@ -52,6 +52,7 @@ namespace drive {
         closeEnoughDelay = 300
     Includes acceleration cap
   */
+  int forward1(double inches, double max=maxDef, double kP=kPDef, double closeEnoughRange=cerDef, double closeEnoughDelay=cedDef);
   int forward(double inches, double max=maxDef, double kP=kPDef, double closeEnoughRange=cerDef, double closeEnoughDelay=cedDef);
 
   /*

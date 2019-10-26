@@ -1,7 +1,7 @@
 #include "main.h"
 
 namespace roller {
-  vex::motor left (vex::PORT20, vex::gearSetting::ratio18_1, false);
+  vex::motor left (vex::PORT19, vex::gearSetting::ratio18_1, false);
   vex::motor right (vex::PORT13, vex::gearSetting::ratio18_1, true);
   const int outSpeed = -50, inSpeed = 100, delay = 5;
 

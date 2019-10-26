@@ -15,6 +15,10 @@ namespace drive {
     left2.stop();
     right1.stop();
     right2.stop();
+    left1.setBrake(vex::brakeType::coast);
+    left2.setBrake(vex::brakeType::coast);
+    right1.setBrake(vex::brakeType::coast);
+    right2.setBrake(vex::brakeType::coast);
     left1.resetRotation();
     left2.resetRotation();
     right1.resetRotation();
@@ -70,6 +74,58 @@ namespace drive {
     reset();
     return 1;
   }
+  int forward1(double inches, double max, double kP, double closeEnoughRange, double closeEnoughDelay) {
+    reset();
+
+    vex::timer closeEnoughTimer, timer;
+    double leftSpeed = 0, rightSpeed = 0, delay = 10; //was 10 delay
+    double target = 41.66966 * inches, leftKp = kP, rightKp = kP, leftError = 0.0, rightError = 0.0, accel = 0.5;
+    //leftEnc.setRotation(0, vex::rotationUnits::deg);
+    vex::task::sleep(300);
+    closeEnoughTimer.clear(); timer.clear();
+    while(true) {
+      //Error
+      leftError = target - leftEnc.rotation(vex::rotationUnits::deg);
+      rightError = target - leftEnc.rotation(vex::rotationUnits::deg);
+
+      //Slew rate
+      if(inches > 0) {
+        if(leftError * leftKp > leftSpeed) leftSpeed += accel;
+        else leftSpeed = leftError * leftKp;
+        if(rightError * rightKp > rightSpeed) rightSpeed += accel;
+        else rightSpeed = rightError * rightKp;
+      }
+      else {
+        if(leftError * leftKp < leftSpeed) leftSpeed -= accel;
+        else leftSpeed = leftError * leftKp;
+        if(rightError * rightKp < rightSpeed) rightSpeed -= accel;
+        else rightSpeed = rightError * rightKp;
+      }
+
+      //Max speed
+      if(leftSpeed > max) leftSpeed = max;
+      else if(leftSpeed < -max) leftSpeed = -max;
+      if(rightSpeed > max) rightSpeed = max;
+      else if(rightSpeed < -max) rightSpeed = -max;
+
+      //End condition
+      if(abs((int)leftError) > closeEnoughRange)
+        closeEnoughTimer.clear();
+      if(closeEnoughTimer.time() > closeEnoughDelay)
+        break;
+
+      //Motor power
+      left1.spin(vex::directionType::fwd, leftSpeed, vex:: velocityUnits::pct);
+      left2.spin(vex::directionType::fwd, leftSpeed, vex:: velocityUnits::pct);
+      right1.spin(vex::directionType::fwd, rightSpeed, vex:: velocityUnits::pct);
+      right2.spin(vex::directionType::fwd, rightSpeed, vex:: velocityUnits::pct);
+
+      //Delay
+      vex::task::sleep(delay);
+    }
+    reset();
+    return 1;
+  }
 
   int forward(double inches, double max, double kP, double closeEnoughRange, double closeEnoughDelay) {
     reset();
@@ -112,9 +168,9 @@ namespace drive {
         break;
 
       //Motor power
-      left1.spin(vex::directionType::fwd, leftSpeed * 0.8, vex:: velocityUnits::pct);
+      left1.spin(vex::directionType::fwd, leftSpeed, vex:: velocityUnits::pct);
       left2.spin(vex::directionType::fwd, leftSpeed, vex:: velocityUnits::pct);
-      right1.spin(vex::directionType::fwd, rightSpeed * 0.8, vex:: velocityUnits::pct);
+      right1.spin(vex::directionType::fwd, rightSpeed, vex:: velocityUnits::pct);
       right2.spin(vex::directionType::fwd, rightSpeed, vex:: velocityUnits::pct);
 
       //Delay

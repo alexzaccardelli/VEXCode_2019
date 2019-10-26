@@ -21,6 +21,32 @@ namespace macro {
     return 1;
   }
 
+  int down(vex::task* a, vex::task* b) {
+    arm::resetBotLimit();
+    if(a != NULL and b != NULL) {
+      a->suspend();
+      b->suspend();
+    }
+    roller::intake();
+    vex::timer timer;
+    arm::run(-100);
+    while(arm::botLimit.value() == 0) {
+      if(timer > 1000)
+        break;
+    }
+      
+    vex::task::sleep(700);
+    arm::reset();
+    roller::reset();
+    arm::move(300);
+    while(abs((int)arm::left.velocity(vex::velocityUnits::pct)) > 10) {}
+    if(a != NULL and b != NULL) {
+      a->resume();
+      b->resume();
+    }
+    return 1;
+  }
+
   int stack(vex::task* a, vex::task* b, vex::task* c) {
     if(a != NULL && b != NULL && c != NULL) {
       a->suspend();

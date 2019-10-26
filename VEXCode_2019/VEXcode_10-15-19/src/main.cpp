@@ -10,18 +10,20 @@ int main() {
   drive::reset();
   roller::reset();
   arm::reset(); 
-  
-  auton::skills();
+  //auton::small(auton::blue);
+  //auton::newBig();
+  //auton::skills();
+
 
   //Driver Control Tasks
-  /*vex::task driveTask(drive::op);
+  vex::task driveTask(drive::op);
   vex::task armTask(arm::op);
   vex::task rollerTask(roller::op);
   while(true) {
     if(Controller.ButtonUp.pressing())
-      macro::cubeIntakeMacro(&armTask, &rollerTask);
+      macro::down(&armTask, &rollerTask);
     if(Controller.ButtonRight.pressing())
       macro::stack(&armTask, &rollerTask, &driveTask);
     vex::task::sleep(5);
-  }*/
+  }
 }

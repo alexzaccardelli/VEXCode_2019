@@ -49,27 +49,31 @@ namespace arm {
         degreesLeft = left.rotation(vex::rotationUnits::deg);
         degreesRight = right.rotation(vex::rotationUnits::deg);
       }
-      while(!Controller.ButtonR2.pressing() && !Controller.ButtonR1.pressing()) {
-        //Error
-        leftError = degreesLeft - left.rotation(vex::rotationUnits::deg);
-        rightError = degreesRight - right.rotation(vex::rotationUnits::deg);
+      if(!Controller.ButtonR2.pressing() && !Controller.ButtonR1.pressing()) {
+        degreesLeft = left.rotation(vex::rotationUnits::deg);
+        degreesRight = right.rotation(vex::rotationUnits::deg);
+        while(!Controller.ButtonR2.pressing() && !Controller.ButtonR1.pressing()) {
+          //Error
+          leftError = degreesLeft - left.rotation(vex::rotationUnits::deg);
+          rightError = degreesRight - right.rotation(vex::rotationUnits::deg);
 
-        //Speed
-        leftSpeed = leftError * kP;
-        rightSpeed = rightError * kP;
-    
-        //Max speed
-        if(leftSpeed > max)   leftSpeed = max;
-        if(rightSpeed > max)  rightSpeed = max;
-        if(leftSpeed < -max)  leftSpeed = -max;
-        if(rightSpeed < -max) rightSpeed = -max;
-    
-        //Motor power
-        left.spin(vex::directionType::fwd, leftSpeed, vex::velocityUnits::pct);
-        right.spin(vex::directionType::fwd, rightSpeed, vex::velocityUnits::pct);
+          //Speed
+          leftSpeed = leftError * kP;
+          rightSpeed = rightError * kP;
+      
+          //Max speed
+          if(leftSpeed > max)   leftSpeed = max;
+          if(rightSpeed > max)  rightSpeed = max;
+          if(leftSpeed < -max)  leftSpeed = -max;
+          if(rightSpeed < -max) rightSpeed = -max;
+      
+          //Motor power
+          left.spin(vex::directionType::fwd, leftSpeed, vex::velocityUnits::pct);
+          right.spin(vex::directionType::fwd, rightSpeed, vex::velocityUnits::pct);
 
-        //Delay
-        vex::task::sleep(delay);
+          //Delay
+          vex::task::sleep(delay);
+        }
       }
     }
     return 1;
