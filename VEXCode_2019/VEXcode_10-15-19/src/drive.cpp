@@ -182,19 +182,19 @@ namespace drive {
 
 
   int op() {
-    int left1Speed = 0, left2Speed = 0, right1Speed = 0, right2Speed = 0, delay = 0, otherDelay = 0;
-    int extendedArmMaxSpeed = 40, extendedArmThresh = 600, blah = 0, last1 =0, last2=0;
-    double accel = 1;
+    double left1Speed = 0, left2Speed = 0, right1Speed = 0, right2Speed = 0, delay = 0, otherDelay = 0;
+    double extendedArmMaxSpeed = 40, extendedArmThresh = 600, blah = 0, last1 =0, last2=0;
+    double accel = 0.6;
     while(true) {
       //Axis values
-      int y1 = Controller.Axis3.position();
-      int y2 = Controller.Axis2.position();
-      int x1 = Controller.Axis4.position();
-      int x2 = Controller.Axis1.position();
+      double y1 = Controller.Axis3.position();
+      double y2 = Controller.Axis2.position();
+      double x1 = Controller.Axis4.position();
+      double x2 = Controller.Axis1.position();
       //left1.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
-      if(abs(x2) > 20) {
+      if(abs((int)x2) > 20) {
         blah = Controller.Axis1.position();
-        while(abs(blah) > 1) {
+        while(abs((int)blah) > 1) {
           otherDelay = 8;
           blah = Controller.Axis1.position();
           if(blah > right1Speed) {
@@ -214,8 +214,6 @@ namespace drive {
           right1.spin(vex::directionType::fwd, -blah, vex::velocityUnits::pct);
           right2.spin(vex::directionType::fwd, blah, vex::velocityUnits::pct);  
           vex::task::sleep(otherDelay);
-
-          printf("hello\n");
         }
         right1Speed = 0;
         right2Speed = 0;
@@ -223,7 +221,24 @@ namespace drive {
         left2Speed = 0;
       }
       else {
-         
+        printf("%d   %d\n", y2, y1);
+         delay = 5;
+        if(abs((int)y2 - (int)y1) > 50) {
+          while(abs((int)y2 - (int)y1) > 20) {
+            printf("hello\n");
+            y1 = Controller.Axis3.position();
+            y2 = Controller.Axis2.position();
+            left1Speed = y1;
+            left2Speed = y1;
+            right1Speed = y2;
+            right2Speed = y2;
+            left1.spin(vex::directionType::fwd, left1Speed, vex::velocityUnits::pct);
+            left2.spin(vex::directionType::fwd, left2Speed, vex::velocityUnits::pct);
+            right1.spin(vex::directionType::fwd, right1Speed, vex::velocityUnits::pct);
+            right2.spin(vex::directionType::fwd, right2Speed, vex::velocityUnits::pct);
+            vex::task::sleep(0);
+          }
+        }
           if(y1 > left1Speed || y1 > left2Speed) {
             left1Speed += accel;
             left2Speed += accel;
@@ -292,7 +307,7 @@ namespace drive {
       right2.spin(vex::directionType::fwd, right2Speed, vex::velocityUnits::pct);
 
       //delay
-      //vex::task::sleep(delay);
+      vex::task::sleep(delay);
     }
     return 1;
   }
