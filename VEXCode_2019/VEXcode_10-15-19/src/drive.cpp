@@ -183,20 +183,48 @@ namespace drive {
 
   int op() {
     int left1Speed = 0, left2Speed = 0, right1Speed = 0, right2Speed = 0, delay = 0;
-    int extendedArmMaxSpeed = 40, extendedArmThresh = 400, extendedArmDelay = 10, normalDelay = 5;
+    int extendedArmMaxSpeed = 40, extendedArmThresh = 600, extendedArmDelay = 10, normalDelay = 5;
     double accel = 1;
     while(true) {
       //Axis values
       int y1 = Controller.Axis3.position();
+      int y2 = Controller.Axis2.position();
       int x1 = Controller.Axis4.position();
       int x2 = Controller.Axis1.position();
+
+      if(abs(x2) > 20) {
+        right1Speed = -x2;
+        right2Speed = x2;
+        left2Speed = -x2;
+        left1Speed = x2;
+      }
+      else {
+        left1Speed = y1;
+        left2Speed = y1;
+        right1Speed = y2;
+        right2Speed = y2;
+      }
+      if(arm::left.rotation(vex::rotationUnits::deg) > extendedArmThresh) {
+        if(left1Speed > extendedArmMaxSpeed)        left1Speed = extendedArmMaxSpeed;
+        else if(left1Speed < -extendedArmMaxSpeed)  left1Speed = -extendedArmMaxSpeed;
+        if(left2Speed > extendedArmMaxSpeed)        left2Speed = extendedArmMaxSpeed;
+        else if(left2Speed < -extendedArmMaxSpeed)  left2Speed = -extendedArmMaxSpeed;
+        if(right1Speed > extendedArmMaxSpeed)       right1Speed = extendedArmMaxSpeed;
+        else if(right1Speed < -extendedArmMaxSpeed) right1Speed = -extendedArmMaxSpeed;
+        if(right2Speed > extendedArmMaxSpeed)       right2Speed = extendedArmMaxSpeed;
+        else if(right2Speed < -extendedArmMaxSpeed) right2Speed = -extendedArmMaxSpeed;
+      }
+      /*else if() {
+
+      }*/
+      
 
       //Deadbands
       //if(abs(y1) > 0 && x1 > -10 && x1 < -10) x1 = 0;
       //if(abs(x1) > 0 && y1 > -10 && y1 < -10) y1 = 0;
 
       //Acceleration control
-      if(y1 + x2 + x1 > left1Speed)       left1Speed += accel;
+      /*if(y1 + x2 + x1 > left1Speed)       left1Speed += accel;
       else if(y1 + x2 + x1 < left1Speed)  left1Speed -= accel;
       if(y1 + x2 - x1 > left2Speed)       left2Speed += accel;
       else if(y1 + x2 - x1 < left2Speed)  left2Speed -= accel;
@@ -217,7 +245,7 @@ namespace drive {
         if(right2Speed > extendedArmMaxSpeed)       right2Speed = extendedArmMaxSpeed;
         else if(right2Speed < -extendedArmMaxSpeed) right2Speed = -extendedArmMaxSpeed;
       }
-      else delay = normalDelay;
+      else delay = normalDelay;*/
         
       //Motor power
       left1.spin(vex::directionType::fwd, left1Speed, vex::velocityUnits::pct);
@@ -226,7 +254,7 @@ namespace drive {
       right2.spin(vex::directionType::fwd, right2Speed, vex::velocityUnits::pct);
 
       //delay
-      vex::task::sleep(delay);
+      vex::task::sleep(5);
     }
     return 1;
   }
