@@ -2,10 +2,17 @@
 #define _MACRO_H_FILE
 
 namespace macro {
-  int cubeIntakeMacro(vex::task* a=NULL, vex::task* b=NULL);
+
+  /*
+  Start roller intake
+  Lower arm to minimum position
+  wait 700 mS
+  Stop rollers
+  Raise to (above the height of a cube)
+  */
   int down(vex::task* a=NULL, vex::task* b=NULL);
+  
   int stack(vex::task* a=NULL, vex::task* b=NULL, vex::task* c=NULL);
-  int stackAuton(vex::task* a=NULL, vex::task* b=NULL, vex::task* c=NULL);
 }
 
 #endif

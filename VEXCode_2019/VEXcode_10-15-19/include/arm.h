@@ -21,11 +21,6 @@ namespace arm {
   void reset();
 
   /*
-    Redeclares botLimit (effectively sets it to 0)
-  */
-  void resetBotLimit();
-
-  /*
     Set left and right encoder to val
       Defulat parameters:
         val = 0

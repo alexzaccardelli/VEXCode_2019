@@ -14,10 +14,6 @@ namespace arm {
     right.resetRotation();
     left.setBrake(vex::brakeType::coast);
     right.setBrake(vex::brakeType::coast);
-    resetBotLimit();
-  }
-  void resetBotLimit() {
-    //vex::limit botLimit(Brain.ThreeWirePort.H);
   }
 
   void setEncoder(double val) {
@@ -40,14 +36,10 @@ namespace arm {
       while(Controller.ButtonR1.pressing()) {
         left.spin(vex::directionType::fwd, upSpeed, vex::velocityUnits::pct);
         right.spin(vex::directionType::fwd, upSpeed, vex::velocityUnits::pct);
-        degreesLeft = left.rotation(vex::rotationUnits::deg);
-        degreesRight = right.rotation(vex::rotationUnits::deg);
       }
       while(Controller.ButtonR2.pressing()) {
         left.spin(vex::directionType::fwd, downSpeed, vex::velocityUnits::pct);
         right.spin(vex::directionType::fwd, downSpeed, vex::velocityUnits::pct);
-        degreesLeft = left.rotation(vex::rotationUnits::deg);
-        degreesRight = right.rotation(vex::rotationUnits::deg);
       }
       if(!Controller.ButtonR2.pressing() && !Controller.ButtonR1.pressing()) {
         degreesLeft = left.rotation(vex::rotationUnits::deg);

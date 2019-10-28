@@ -1,45 +1,28 @@
 #include "main.h"
 
 namespace macro {
-  int cubeIntakeMacro(vex::task* a, vex::task* b) {
-    arm::resetBotLimit();
-    if(a != NULL and b != NULL) {
-      a->suspend();
-      b->suspend();
-    }
-    arm::move(170, 100, 0.6, 30, 150);
-    roller::intake();
-    while(arm::botLimit.value() == 0)
-      arm::run(-100);
-    vex::task::sleep(700);
-    arm::stop();
-    roller::reset();
-    if(a != NULL and b != NULL) {
-      a->resume();
-      b->resume();
-    }
-    return 1;
-  }
-
   int down(vex::task* a, vex::task* b) {
-    arm::resetBotLimit();
+    bool flag = false;
     if(a != NULL and b != NULL) {
       a->suspend();
       b->suspend();
     }
+
     roller::intake();
-    vex::timer timer;
+    vex::limit blah(Brain.ThreeWirePort.H);
     arm::run(-100);
-    while(arm::botLimit.value() == 0) {
-      if(timer > 1000)
+    vex::timer t;
+    while(blah.value() == 0)
+      if(t > 1000) {
+        flag = true;
         break;
-    }
-      
-    vex::task::sleep(700);
+      }
     arm::reset();
+    if(flag == false)
+      vex::task::sleep(700);
     roller::reset();
     arm::move(300);
-    while(abs((int)arm::left.velocity(vex::velocityUnits::pct)) > 10) {}
+
     if(a != NULL and b != NULL) {
       a->resume();
       b->resume();
@@ -53,51 +36,22 @@ namespace macro {
       b->suspend();
       c->suspend();
     }
-    roller::outake();
-    vex::task::sleep(800);
-    roller::reset();
-    //if(arm::left.rotation(vex::rotationUnits::deg) < 50)
-      //drive::forward(-1, 100, 0.14, 30, 150); //Was just -1
-    arm::run(60);
-    roller::outake();
-    vex::timer timer;
-    while(arm::left.rotation(vex::rotationUnits::deg) < 860 && timer.time() < 1500) {}
-    arm::stop();
-    roller::reset();
-    if(a != NULL && b != NULL && c != NULL) {
-      a->resume();
-      b->resume();
-      c->resume();
-    }
-    arm::degreesLeft = arm::left.rotation(vex::rotationUnits::deg);
-    arm::degreesRight = arm::right.rotation(vex::rotationUnits::deg);
-    return 1;
-  }
 
-  int stackAuton(vex::task* a, vex::task* b, vex::task* c) {
-    if(a != NULL && b != NULL && c != NULL) {
-      a->suspend();
-      b->suspend();
-      c->suspend();
-    }
     roller::outake();
     vex::task::sleep(800);
     roller::reset();
-    //if(arm::left.rotation(vex::rotationUnits::deg) < 50)
-      //drive::forward(-1, 100, 0.14, 30, 150); //Was just -1
     arm::run(55);
     roller::outake(-60);
     vex::timer timer;
     while(arm::left.rotation(vex::rotationUnits::deg) < 860 && timer.time() < 2000) {}
     arm::stop();
     roller::reset();
+
     if(a != NULL && b != NULL && c != NULL) {
       a->resume();
       b->resume();
       c->resume();
     }
-    arm::degreesLeft = arm::left.rotation(vex::rotationUnits::deg);
-    arm::degreesRight = arm::right.rotation(vex::rotationUnits::deg);
     return 1;
   }
 }

@@ -2,28 +2,10 @@
 
 namespace auton {
 
-  /*
-    Private functions:
-      _bigLift(): Move to 550 degrees
-      _medLift(): move to 0 degrees
-      _smallLift(): move to 170 degrees
-  */
-  int _bigLift() {
-    arm::move(670, 100, 0.6, 20, 150);
-    return 1;
-  }
-  int _smallLift() {
-    arm::move(230, 100, 0.6, 20, 200);
-    return 1;
-  }
-  int _medLift() {
-    arm::move(0, 100, 0.6, 20, 300);
-    return 1;
-  }
-  int _reallySmallLift() {
-    arm::move(180, 100, 0.6, 20, 200);
-    return 1;
-  }
+  int _bigLift() { arm::move(670, 100, 0.6, 20, 150); return 1; }
+  int _smallLift() { arm::move(230, 100, 0.6, 20, 200); return 1; }
+  int _medLift() { arm::move(0, 100, 0.6, 20, 300); return 1; }
+  int _reallySmallLift() { arm::move(180, 100, 0.6, 20, 200); return 1; }
   
   int runToBot() {
     vex::limit blah(Brain.ThreeWirePort.H);
@@ -43,8 +25,6 @@ namespace auton {
 
   void small(int side) {
     vex::timer timer;
-    timer.clear();
-    arm::resetBotLimit();
     arm::setEncoder(0);
 
     vex::task temp(_reallySmallLift); //Maybe change
@@ -65,10 +45,7 @@ namespace auton {
       drive::forward(5.5, 100, 0.12, 25, 100);
       temp.stop();
       roller::intake();
-      vex::limit blah1(Brain.ThreeWirePort.H);
-      arm::run(-100);
-      while(blah1.value() == 0) {}
-      arm::reset();
+      runToBot();
       vex::task::sleep(700);
       roller::reset();
     }
@@ -78,13 +55,14 @@ namespace auton {
     drive::run(100);
     vex::task::sleep(1600);
     drive::reset();
-    macro::stackAuton();
+    macro::stack();
 
     Brain.Screen.clearScreen();
     Brain.Screen.setCursor(8, 5);
     Brain.Screen.print(timer.time());
   }
-  void newBig() {
+
+  void big(int side) {
     vex::timer timer;
     arm::setEncoder(0);
     vex::task temp(_bigLift);
@@ -100,77 +78,6 @@ namespace auton {
     drive::runRight(50);
     vex::task::sleep(1800);
     drive::reset();
-    macro::stackAuton();
-
-    Brain.Screen.clearScreen();
-    Brain.Screen.setCursor(5, 5);
-    Brain.Screen.print(timer.time());
-    
-    /*drive::forward(0);
-    drive::run(100);
-    vex::task::sleep(500);
-    macro::stack();*/
-  }
-
-  void big(int side) {
-    vex::timer timer;
-    timer.clear();
-    arm::resetBotLimit();
-    arm::setEncoder(0);
-
-    vex::task temp(_reallySmallLift);
-    drive::forward(13, 100, 0.12, 25, 100);
-    temp.stop();
-    vex::limit blah(Brain.ThreeWirePort.H);
-    roller::intake();
-    arm::run(-100);
-    while(arm::botLimit.value() == 0) {}
-    arm::reset();
-    vex::task::sleep(400);
-    roller::reset();
-
-    vex::task temp1(_bigLift);
-    vex::task::sleep(350);
-    drive::forward(22.5, 60, 0.12, 25, 100);
-    temp1.stop();
-    roller::intake();
-    arm::move(260, 100, 0.6, 20, 150); //changing
-    roller::reset();
-    arm::move(280, 100, 0.6, 20, 150);//changing
-
-    drive::forward(-5);
-    vex::task::sleep(200);
-    temp = vex::task(_reallySmallLift);
-    vex::task::sleep(200);
-    if(side == 1) drive::turn(-108, 60);//changing
-    else drive::turn(108, 60); //changing
-    
-    
-    drive::forward(21.5, 50);
-    roller::intake();
-    arm::run(-100);
-    while(arm::botLimit.value() == 0) {}
-    arm::reset();
-    vex::task::sleep(400);
-    roller::reset();
-
-    drive::runRight(50);
-    drive::runLeft(100);
-    
-    vex::task::sleep(800);
-    drive::reset();
-
-    //Change this to not use timing
-    /*drive::forward(-10);
-    drive::turn(117);
-    drive::runRight(100);
-    drive::runLeft(70);
-    vex::task::sleep(850);
-    drive::runRight(50);
-    drive::runLeft(100);
-    vex::task::sleep(900);
-    drive::reset();*/
-
     macro::stack();
 
     Brain.Screen.clearScreen();
@@ -187,7 +94,7 @@ namespace auton {
   }
   void skills() {
     vex::timer t;
-    newBig();
+    big(blue);
     vex::task::sleep(200);
     
     drive::runRight(-100);
