@@ -4,7 +4,8 @@
 namespace auton {
   enum {
     red = 1,
-    blue = 2
+    blue = 2,
+    auton = 3
   };
   void big(int side);
   void small(int side);

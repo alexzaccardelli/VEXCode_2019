@@ -18,14 +18,14 @@ int main() {
   drive::reset();
   roller::reset();
   arm::reset(); 
-  //auton::small(auton::blue);
+  //auton::big(auton::blue);
   //auton::newBig();
-  //auton::skills();
+  auton::skills();
 
   //arm::setEncoder(900);
   //Driver Control Tasks
   //auton::runToBot();
-  vex::task driveTask(drive::op);
+  /*vex::task driveTask(drive::op);
   vex::task armTask(arm::op);
   vex::task rollerTask(roller::op);
   vex::task displayTask(display);
@@ -37,5 +37,5 @@ int main() {
     if(Controller.ButtonDown.pressing())
       macro::armReset(&armTask);
     vex::task::sleep(5);
-  }
+  }*/
 }
