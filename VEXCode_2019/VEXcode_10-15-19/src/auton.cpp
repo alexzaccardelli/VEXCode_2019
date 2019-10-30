@@ -49,7 +49,7 @@ namespace auton {
       vex::task::sleep(700);
       roller::reset();
     }
-    if(side == 1) drive::turn(-120, 100, 0.3, 6, 300);
+    if(side == red) drive::turn(120, 100, 0.3, 6, 300);
     else drive::turn(-120, 100, 0.3, 6, 300);
     vex::task::sleep(200);
     drive::run(100);
@@ -73,9 +73,10 @@ namespace auton {
     vex::task::sleep(700);
     roller::reset();
     drive::forward1(-31, 70);
-    drive::turn(105);
-    drive::runLeft(100);
-    drive::runRight(50);
+    if(side == blue) drive::turn(105);
+    else drive::turn(-97);
+    drive::runRight(100);
+    drive::runLeft(50);
     vex::task::sleep(1800);
     drive::reset();
     macro::stack();

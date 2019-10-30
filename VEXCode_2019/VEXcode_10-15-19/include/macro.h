@@ -13,6 +13,8 @@ namespace macro {
   int down(vex::task* a=NULL, vex::task* b=NULL);
   
   int stack(vex::task* a=NULL, vex::task* b=NULL, vex::task* c=NULL);
+
+  int armReset(vex::task* a=NULL);
 }
 
 #endif

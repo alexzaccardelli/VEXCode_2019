@@ -12,17 +12,15 @@ namespace macro {
     vex::limit blah(Brain.ThreeWirePort.H);
     arm::run(-100);
     vex::timer t;
-    while(blah.value() == 0)
-      if(t > 1000) {
-        flag = true;
-        break;
-      }
+    while(blah.value() == 0) {
+    }
     arm::reset();
     if(flag == false)
       vex::task::sleep(700);
     roller::reset();
-    arm::move(300);
-
+    arm::move(250);
+    arm::degreesLeft = arm::left.rotation(vex::rotationUnits::deg);
+    arm::degreesRight = arm::right.rotation(vex::rotationUnits::deg);
     if(a != NULL and b != NULL) {
       a->resume();
       b->resume();
@@ -43,15 +41,30 @@ namespace macro {
     arm::run(55);
     roller::outake(-60);
     vex::timer timer;
-    while(arm::left.rotation(vex::rotationUnits::deg) < 860 && timer.time() < 2000) {}
+    while(arm::left.rotation(vex::rotationUnits::deg) < 900 && timer.time() < 1800) {}
     arm::stop();
     roller::reset();
-
+    arm::degreesLeft = arm::left.rotation(vex::rotationUnits::deg);
+    arm::degreesRight = arm::right.rotation(vex::rotationUnits::deg);
     if(a != NULL && b != NULL && c != NULL) {
       a->resume();
       b->resume();
       c->resume();
     }
+    return 1;
+  }
+
+  int armReset(vex::task* a) {
+    if(a != NULL)
+      a->suspend();
+    vex::limit blah(Brain.ThreeWirePort.H);
+    arm::run(-100);
+    while(blah.value() == 0) {}
+    arm::reset();
+    arm::degreesLeft = arm::left.rotation(vex::rotationUnits::deg);
+    arm::degreesRight = arm::right.rotation(vex::rotationUnits::deg);
+    if(a != NULL)
+      a->resume();
     return 1;
   }
 }

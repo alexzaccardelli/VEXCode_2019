@@ -31,19 +31,23 @@ namespace arm {
 
   int op() {
     int upSpeed = 100, downSpeed = -50, delay = 10;
-    double leftSpeed = 0, rightSpeed = 0, max = 100, kP = 0.5, leftError = 0, rightError = 0;
+    double leftSpeed = 0, rightSpeed = 0, max = 100, kP = 0.04, leftError = 0, rightError = 0;
     while(true) {
       while(Controller.ButtonR1.pressing()) {
         left.spin(vex::directionType::fwd, upSpeed, vex::velocityUnits::pct);
         right.spin(vex::directionType::fwd, upSpeed, vex::velocityUnits::pct);
+        degreesLeft = left.rotation(vex::rotationUnits::deg);
+        degreesRight = right.rotation(vex::rotationUnits::deg);
+        
       }
       while(Controller.ButtonR2.pressing()) {
         left.spin(vex::directionType::fwd, downSpeed, vex::velocityUnits::pct);
         right.spin(vex::directionType::fwd, downSpeed, vex::velocityUnits::pct);
-      }
-      if(!Controller.ButtonR2.pressing() && !Controller.ButtonR1.pressing()) {
         degreesLeft = left.rotation(vex::rotationUnits::deg);
         degreesRight = right.rotation(vex::rotationUnits::deg);
+      }
+      if(!Controller.ButtonR2.pressing() && !Controller.ButtonR1.pressing()) {
+        
         while(!Controller.ButtonR2.pressing() && !Controller.ButtonR1.pressing()) {
           //Error
           leftError = degreesLeft - left.rotation(vex::rotationUnits::deg);
