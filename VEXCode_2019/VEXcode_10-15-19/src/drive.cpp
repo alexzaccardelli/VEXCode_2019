@@ -224,7 +224,7 @@ namespace drive {
       double x1 = Controller.Axis4.position();
       double x2 = Controller.Axis1.position();
 
-      if (abs((int)x2) > 40) {
+      /*if (abs((int)x2) > 40) {
         blah = Controller.Axis1.position();
         while (abs((int)blah) > 1) {
           accel = 1;
@@ -330,6 +330,24 @@ namespace drive {
           else if (right2Speed < -extendedArmMaxSpeed)
             right2Speed = -extendedArmMaxSpeed;
         }
+      }*/
+      if(y1 + x2 + x1 > left1Speed)       left1Speed += accel;
+      else if(y1 + x2 + x1 < left1Speed)  left1Speed -= accel;
+      if(y1 + x2 - x1 > left2Speed)       left2Speed += accel;
+      else if(y1 + x2 - x1 < left2Speed)  left2Speed -= accel;
+      if(y1 - x2 - x1 > right1Speed)      right1Speed += accel;
+      else if(y1 - x2 - x1 < right1Speed) right1Speed -= accel;
+      if(y1 - x2 + x1 > right2Speed)      right2Speed += accel;
+      else if(y1 - x2 + x1 < right2Speed) right2Speed -= accel;
+      if(arm::left.rotation(vex::rotationUnits::deg) > extendedArmThresh) {
+        if(left1Speed > extendedArmMaxSpeed)        left1Speed = extendedArmMaxSpeed;
+        else if(left1Speed < -extendedArmMaxSpeed)  left1Speed = -extendedArmMaxSpeed;
+        if(left2Speed > extendedArmMaxSpeed)        left2Speed = extendedArmMaxSpeed;
+        else if(left2Speed < -extendedArmMaxSpeed)  left2Speed = -extendedArmMaxSpeed;
+        if(right1Speed > extendedArmMaxSpeed)       right1Speed = extendedArmMaxSpeed;
+        else if(right1Speed < -extendedArmMaxSpeed) right1Speed = -extendedArmMaxSpeed;
+        if(right2Speed > extendedArmMaxSpeed)       right2Speed = extendedArmMaxSpeed;
+        else if(right2Speed < -extendedArmMaxSpeed) right2Speed = -extendedArmMaxSpeed;
       }
 
       // Motor power
