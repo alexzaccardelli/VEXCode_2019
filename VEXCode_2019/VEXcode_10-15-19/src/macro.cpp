@@ -41,7 +41,7 @@ namespace macro {
     arm::run(55);
     roller::outake(-60);
     vex::timer timer;
-    while(arm::left.rotation(vex::rotationUnits::deg) < 900 && timer.time() < 1800) {}
+    while(arm::left.rotation(vex::rotationUnits::deg) < 900 && timer.time() < 1950) {}
     arm::stop();
     roller::reset();
     arm::degreesLeft = arm::left.rotation(vex::rotationUnits::deg);
