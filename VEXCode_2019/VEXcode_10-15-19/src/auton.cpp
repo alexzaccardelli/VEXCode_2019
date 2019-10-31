@@ -105,7 +105,7 @@ namespace auton {
   //32 point skills
   void skills() {
     vex::timer t;
-    big(auton);
+    /*big(auton);
     vex::task::sleep(200);
     //vex::task temp1(_otherLift);
 
@@ -138,15 +138,29 @@ namespace auton {
     drive::turn(95);
     temp = vex::task(_bigLift);
     vex::task::sleep(800);
-    drive::forward(17.5);
+    drive::forward(17.5);*/
     roller::intake();
     runToBot();
     vex::task::sleep(700);
     roller::reset();
 
     drive::turn(96);
-    drive::forward(35, 70);
-    drive::turn(90);
+    drive::forward(34, 70);
+    vex::task::sleep(300);
+    drive::turn(15);
+    drive::right1.spin(vex::directionType::fwd, -70, vex:: velocityUnits::pct);
+    drive::left2.spin(vex::directionType::fwd, -100, vex:: velocityUnits::pct);
+    drive::right2.spin(vex::directionType::fwd, 100, vex:: velocityUnits::pct);
+    drive::left1.spin(vex::directionType::fwd, 70, vex:: velocityUnits::pct);
+    vex::task::sleep(900);
+    drive::reset();
+    drive::runLeft(50);
+    drive::runRight(100);
+    vex::task::sleep(1000);
+    drive::reset();
+    macro::stack();
+    drive::reset();
+    /*drive::turn(90);
     drive::runRight(100);
     drive::runLeft(50);
     vex::task::sleep(1800);
@@ -155,7 +169,7 @@ namespace auton {
 
     Brain.Screen.clearScreen();
     Brain.Screen.setCursor(5, 5);
-    Brain.Screen.print(t.time());
+    Brain.Screen.print(t.time());*/
   }
 }
 
