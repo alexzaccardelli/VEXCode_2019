@@ -10,6 +10,7 @@ namespace drive {
   //Default parameters for forward()
   extern const double maxDef, kPDef, cerDef, cedDef;
   extern const double maxDef1, kPDef1, cerDef1, cedDef1;
+  extern double left1Speed, left2Speed, right1Speed, right2Speed;
   
   /*
     Stops all motors
