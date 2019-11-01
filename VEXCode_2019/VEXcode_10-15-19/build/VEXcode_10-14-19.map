@@ -118,7 +118,7 @@ Discarded input sections
  .ARM.exidx.text._ZN3arm10setEncoderEd
                 0x00000000        0x8 build/src/arm.o
  .text._ZN3arm2opEv
-                0x00000000      0x2b0 build/src/arm.o
+                0x00000000      0x2e8 build/src/arm.o
  .ARM.exidx.text._ZN3arm2opEv
                 0x00000000        0x8 build/src/arm.o
  .text._ZN3arm4holdEv

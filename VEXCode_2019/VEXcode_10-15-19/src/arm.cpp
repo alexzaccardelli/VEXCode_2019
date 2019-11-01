@@ -31,7 +31,7 @@ namespace arm {
 
   int op() {
     int upSpeed = 100, downSpeed = -50, delay = 10;
-    double leftSpeed = 0, rightSpeed = 0, max = 100, kP = 0.04, leftError = 0, rightError = 0;
+    double leftSpeed = 0, rightSpeed = 0, max = 100, kP = 0.04, kTorque = 0, leftError = 0, rightError = 0, leftKp = 0, rightKp = 0; //Change kTorque
     while(true) {
       while(Controller.ButtonR1.pressing()) {
         left.spin(vex::directionType::fwd, upSpeed, vex::velocityUnits::pct);
@@ -47,16 +47,17 @@ namespace arm {
         degreesRight = right.rotation(vex::rotationUnits::deg);
       }
       if(!Controller.ButtonR2.pressing() && !Controller.ButtonR1.pressing()) {
-        
         while(!Controller.ButtonR2.pressing() && !Controller.ButtonR1.pressing()) {
           //Error
           leftError = degreesLeft - left.rotation(vex::rotationUnits::deg);
           rightError = degreesRight - right.rotation(vex::rotationUnits::deg);
+          leftKp = kTorque * left.torque();
+          rightKp = kTorque * right.torque();
 
           //Speed
-          leftSpeed = leftError * kP;
-          rightSpeed = rightError * kP;
-      
+          leftSpeed = leftError * leftKp;
+          rightSpeed = rightError * rightKp;
+
           //Max speed
           if(leftSpeed > max)   leftSpeed = max;
           if(rightSpeed > max)  rightSpeed = max;
@@ -64,8 +65,8 @@ namespace arm {
           if(rightSpeed < -max) rightSpeed = -max;
       
           //Motor power
-          left.spin(vex::directionType::fwd, leftSpeed, vex::velocityUnits::pct);
-          right.spin(vex::directionType::fwd, rightSpeed, vex::velocityUnits::pct);
+          left.setVelocity(leftSpeed, vex::velocityUnits::pct);
+          right.setVelocity(rightSpeed, vex::velocityUnits::pct);
 
           //Delay
           vex::task::sleep(delay);
@@ -79,19 +80,23 @@ namespace arm {
     arm::degreesLeft = arm::left.rotation(vex::rotationUnits::deg);
     arm::degreesRight = arm::right.rotation(vex::rotationUnits::deg);
     stop();
-    double leftError = 0, rightError = 0, kP = 0.5, max = 100, leftSpeed = 0, rightSpeed = 0; //Needs tuning
+    double leftError = 0, rightError = 0, kP = 0.5, max = 100, leftSpeed = 0, rightSpeed = 0;
+    double leftKp = 0, rightKp = 0, kTorque = 0; //values
     int delay = 10;
     double degrees = left.rotation(vex::rotationUnits::deg);
     vex::timer timer, closeEnoughTimer;
     closeEnoughTimer.clear(); timer.clear();
     while(true) {
+      leftKp = kTorque * left.torque();
+      rightKp = kTorque * right.torque();
+
       //Error
       leftError = degrees - left.rotation(vex::rotationUnits::deg);
       rightError = degrees - right.rotation(vex::rotationUnits::deg);
 
       //Speed
-      leftSpeed = leftError * kP;
-      rightSpeed = rightError * kP;
+      leftSpeed = leftError * leftKp;
+      rightSpeed = rightError * rightKp;
   
       //Max speed
       if(leftSpeed > max)   leftSpeed = max;
@@ -114,8 +119,8 @@ namespace arm {
     stop();
     double leftError = 0, rightError = 0, leftSpeed = 0, rightSpeed = 0;
     int delay = 10;
-    vex::timer timer, closeEnoughTimer;
-    closeEnoughTimer.clear(); timer.clear();
+    vex::timer closeEnoughTimer;
+    closeEnoughTimer.clear();
     while(true) {
       //Error
       leftError = degrees - left.rotation(vex::rotationUnits::deg);
