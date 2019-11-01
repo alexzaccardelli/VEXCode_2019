@@ -7,7 +7,7 @@ vex::controller Controller;
 
 int display() {
   while(true) {
-    printf("%f\n", drive::left1.torque());
+    printf("%f   %f\n", arm::left.torque(), arm::right.torque());
     vex::task::sleep(10);
   }
   return 1;
