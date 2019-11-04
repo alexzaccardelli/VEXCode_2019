@@ -5,7 +5,7 @@ namespace drive {
 
   //Global access
   extern vex::motor left1, right1, left2, right2;
-  extern vex::encoder leftEnc, rightEnc;
+  extern vex::encoder leftEnc;
 
   //Default parameters for forward()
   extern const double maxDef, kPDef, cerDef, cedDef;
