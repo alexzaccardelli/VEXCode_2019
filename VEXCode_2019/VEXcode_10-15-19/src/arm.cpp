@@ -47,8 +47,9 @@ namespace arm {
         degreesRight = right.rotation(vex::rotationUnits::deg);
       }
       if(!Controller.ButtonR2.pressing() && !Controller.ButtonR1.pressing()) {
+        degreesLeft = left.rotation(vex::rotationUnits::deg);
+        degreesRight = right.rotation(vex::rotationUnits::deg);
         while(!Controller.ButtonR2.pressing() && !Controller.ButtonR1.pressing()) {
-          kP = 
           //Error
           leftError = degreesLeft - left.rotation(vex::rotationUnits::deg);
           rightError = degreesRight - right.rotation(vex::rotationUnits::deg);
@@ -71,6 +72,8 @@ namespace arm {
           vex::task::sleep(delay);
         }
       }
+      left.stop();
+      right.stop();
     }
     return 1;
   }

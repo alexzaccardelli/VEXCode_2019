@@ -44,6 +44,7 @@ namespace macro {
     while(arm::left.rotation(vex::rotationUnits::deg) < 900 && timer.time() < 1950) {}
     arm::stop();
     roller::reset();
+    
     arm::degreesLeft = arm::left.rotation(vex::rotationUnits::deg);
     arm::degreesRight = arm::right.rotation(vex::rotationUnits::deg);
     if(a != NULL && b != NULL && c != NULL) {

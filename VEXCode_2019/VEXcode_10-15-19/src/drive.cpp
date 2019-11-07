@@ -212,7 +212,7 @@ namespace drive {
 
   int op() {
     double left1Speed = 0, left2Speed = 0, right1Speed = 0, right2Speed = 0, delay = 5;
-    double extendedArmMaxSpeed = 30, extendedArmThresh = 400;
+    double extendedArmMaxSpeed = 30, extendedArmThresh = 250;
     double accel = 0.6;
     while (true) {
       // Axis values
@@ -247,6 +247,16 @@ namespace drive {
           else if(right1Speed < -75) right1Speed = -75;
           if(right2Speed > 75) right2Speed = 75;
           else if(right2Speed < -75) right2Speed = -75;
+          if(arm::left.rotation(vex::rotationUnits::deg) > extendedArmThresh) {
+        if(left1Speed > extendedArmMaxSpeed)        left1Speed = extendedArmMaxSpeed;
+        else if(left1Speed < -extendedArmMaxSpeed)  left1Speed = -extendedArmMaxSpeed;
+        if(left2Speed > extendedArmMaxSpeed)        left2Speed = extendedArmMaxSpeed;
+        else if(left2Speed < -extendedArmMaxSpeed)  left2Speed = -extendedArmMaxSpeed;
+        if(right1Speed > extendedArmMaxSpeed)       right1Speed = extendedArmMaxSpeed;
+        else if(right1Speed < -extendedArmMaxSpeed) right1Speed = -extendedArmMaxSpeed;
+        if(right2Speed > extendedArmMaxSpeed)       right2Speed = extendedArmMaxSpeed;
+        else if(right2Speed < -extendedArmMaxSpeed) right2Speed = -extendedArmMaxSpeed;
+      }
 
           left1.spin(vex::directionType::fwd, left1Speed, vex::velocityUnits::pct);
           left2.spin(vex::directionType::fwd, left2Speed, vex::velocityUnits::pct);
@@ -261,18 +271,18 @@ namespace drive {
         left2Speed = 0;
       }
 
-      else if (abs((int)x1) > 20) {
+      else if (abs((int)x1) > 5) {
         while (abs((int)x1) > 1) {
           accel = 1;
-          x1 = Controller.Axis1.position();
+          x1 = Controller.Axis4.position();
 
-          if (x2 > right2Speed) {
+          if (x1 > right2Speed) {
             right1Speed -= accel;
             right2Speed += accel;
             left1Speed += accel;
             left2Speed -= accel;
           }
-          else if (x2 < right2Speed) {
+          else if (x1 < right2Speed) {
             right1Speed += accel;
             right2Speed -= accel;
             left1Speed -= accel;

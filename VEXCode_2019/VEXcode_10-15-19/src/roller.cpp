@@ -2,7 +2,7 @@
 
 namespace roller {
   vex::motor left (vex::PORT19, vex::gearSetting::ratio18_1, false);
-  vex::motor right (vex::PORT15, vex::gearSetting::ratio18_1, true);
+  vex::motor right (vex::PORT16, vex::gearSetting::ratio18_1, true);
   const int outSpeed = -50, inSpeed = 100, delay = 5;
 
   void reset() {

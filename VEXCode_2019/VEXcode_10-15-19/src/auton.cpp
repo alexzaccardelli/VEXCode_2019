@@ -122,42 +122,80 @@ namespace auton {
     vex::task::sleep(700);
     roller::reset();
     drive::turn(120);
-    drive::forward(34, 70);
-    drive::forward(-2,70);
+    drive::forward(32, 70);
+    //drive::forward(-2,70);
     drive::turn(-60);
-    drive::forward(17,100);
+    drive::forward(18,100);
     drive::reset();
     drive::left2.spin(vex::directionType::fwd, 100, vex:: velocityUnits::pct);
     drive::left1.spin(vex::directionType::fwd, 100, vex:: velocityUnits::pct);
     drive::right2.spin(vex::directionType::fwd, 30, vex:: velocityUnits::pct);
     drive::right1.spin(vex::directionType::fwd, 30, vex:: velocityUnits::pct);
-    vex::task::sleep(1800);
+    vex::task::sleep(1100);//1800
     drive::reset();
+    drive::forward(-.5);
     macro::stack();
     temp5 = vex::task(arm::hold);
-    /*drive::turn(-68);
-    drive::runLeft(100);
-    drive::runRight(60);
-    vex::task::sleep(1600);
-    drive::reset();
-    vex::task::sleep(300);*/
-    /*
-    drive::right1.spin(vex::directionType::fwd, 70, vex:: velocityUnits::pct);
-    drive::left2.spin(vex::directionType::fwd, 100, vex:: velocityUnits::pct);
-    drive::right2.spin(vex::directionType::fwd, -100, vex:: velocityUnits::pct);
-    drive::left1.spin(vex::directionType::fwd, -70, vex:: velocityUnits::pct);
-    vex::task::sleep(1800);
-    drive::reset();
-    vex::task::sleep(300);
-    drive::runLeft(80);
-    drive::runRight(100);
-    vex::task::sleep(1000);
-    drive::reset();
-    macro::stack();
-    temp5 = vex::task(arm::hold);*/
 
     drive::runRight(-100);
-    vex::task::sleep(400);
+    vex::task::sleep(550);
+    drive::reset();
+    vex::task::sleep(300);
+    drive::right1.spin(vex::directionType::fwd, 50, vex:: velocityUnits::pct);
+    drive::left2.spin(vex::directionType::fwd, 100, vex:: velocityUnits::pct);
+    drive::right2.spin(vex::directionType::fwd, -100, vex:: velocityUnits::pct);
+    drive::left1.spin(vex::directionType::fwd, -50, vex:: velocityUnits::pct);
+    vex::task::sleep(1600);
+    drive::reset();
+    vex::task::sleep(500);
+    drive::run(10);
+    while(drive::left1.torque() < .4) {}
+    drive::reset();
+    vex::task::sleep(200);
+    temp5.stop();
+    
+    drive::turn(-8, 100, 0.3, 4, 250); //Changed (-15)
+
+    vex::task temp(delayedRunToBot);
+    drive::forward(-68);//-70.5
+    temp.stop();
+
+    drive::turn(92);
+    temp = vex::task(_bigLift);
+    vex::task::sleep(800);
+    drive::forward(21.5,60);
+    
+    roller::intake();
+    runToBot();
+    vex::task::sleep(700);
+    roller::reset();
+    drive::turn(90);
+    drive::forward(34, 70);
+    //drive::forward(-2,70);
+    drive::turn(64);
+    drive::forward(13,100);//15
+    drive::reset();
+    drive::left2.spin(vex::directionType::fwd, 20, vex:: velocityUnits::pct);//0
+    drive::left1.spin(vex::directionType::fwd, 20, vex:: velocityUnits::pct);//0
+    drive::right2.spin(vex::directionType::fwd, 100, vex:: velocityUnits::pct);
+    drive::right1.spin(vex::directionType::fwd, 100, vex:: velocityUnits::pct);
+    vex::task::sleep(1200);//2100
+    drive::reset();
+    drive::forward(-.5);
+
+    roller::outake();
+    vex::task::sleep(800);
+    roller::reset();
+    arm::run(55);
+    roller::outake(-60);
+    vex::task::sleep(700);
+    arm::stop();
+    roller::reset();
+    _bigLift();
+    vex::task temp6(arm::hold);
+
+    drive::runRight(-100);
+    vex::task::sleep(550);
     drive::reset();
     vex::task::sleep(300);
     drive::right1.spin(vex::directionType::fwd, 50, vex:: velocityUnits::pct);
@@ -168,42 +206,17 @@ namespace auton {
     drive::reset();
     vex::task::sleep(500);
     drive::run(10);
-    while(drive::left1.torque() < .4) {}
+    while(drive::left1.torque() < .42) {}
     drive::reset();
     vex::task::sleep(200);
-    temp5.stop();
-    
-    drive::turn(-5, 100, 0.3, 4, 250); //Changed (-15)
-
-    vex::task temp(delayedRunToBot);
-    drive::forward(-70.5);
-    temp.stop();
-
-    drive::turn(92);
-    temp = vex::task(_bigLift);
-    vex::task::sleep(800);
-    drive::forward(20.5,60);
-    roller::intake();
-    runToBot();
+    temp6.stop();
+    drive::turn(-5);
+    drive::forward(-45, 70);
+    drive::turn(123);
+    drive::forward(9.5);
+    roller::outake();
     vex::task::sleep(700);
     roller::reset();
-
-    drive::turn(96);
-    drive::forward(34, 70);
-    vex::task::sleep(300);
-    //drive::turn(13);
-    drive::right1.spin(vex::directionType::fwd, -70, vex:: velocityUnits::pct);
-    drive::left2.spin(vex::directionType::fwd, -100, vex:: velocityUnits::pct);
-    drive::right2.spin(vex::directionType::fwd, 100, vex:: velocityUnits::pct);
-    drive::left1.spin(vex::directionType::fwd, 70, vex:: velocityUnits::pct);
-    vex::task::sleep(1000);
-    drive::reset();
-    drive::runLeft(65);
-    drive::runRight(100);
-    vex::task::sleep(1200);
-    drive::reset();
-    macro::stack();
-    drive::reset();
 
     Brain.Screen.clearScreen();
     Brain.Screen.setCursor(5, 5);
