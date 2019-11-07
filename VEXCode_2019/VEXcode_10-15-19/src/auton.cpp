@@ -100,30 +100,39 @@ namespace auton {
     Brain.Screen.setCursor(5, 5);
     Brain.Screen.print(timer.time());
   }
-
-
+  int asdf() {
+    arm::move(600, 100, 0.6, 20, 150);
+    arm::hold();
+    return 1;
+  }
   //32 point skills
   void skills() {
     vex::timer t;
-    drive::forward(2);
-    arm::move(600, 100, 0.6, 20, 150);
-    vex::task temp5(arm::hold);
-    drive::forward(12.5);
+    
+    vex::task jf(asdf);
+    drive::forward(14.5, 25);
+    
+    //jf.stop();
+    //vex::task temp5(arm::hold);
     roller::outake();
     vex::task::sleep(800);
     roller::reset();
-    drive::forward(-8);
 
+    Brain.Screen.clearScreen();
+    Brain.Screen.setCursor(5, 5);
+    Brain.Screen.print(t.time());
+
+    drive::forward(-8);
     drive::turn(80);
     drive::forward(34, 60);
-    temp5.stop();
+    jf.stop();
     roller::intake();
     runToBot();
     vex::task::sleep(700);
     roller::reset();
     drive::turn(120);
-    drive::forward(32, 70);
-    //drive::forward(-2,70);
+    drive::forward(33, 70);//32
+    drive::forward(-1,70);//-2
     drive::turn(-60);
     drive::forward(18,100);
     drive::reset();
@@ -135,7 +144,7 @@ namespace auton {
     drive::reset();
     drive::forward(-.5);
     macro::stack();
-    temp5 = vex::task(arm::hold);
+    vex::task temp5(arm::hold);
 
     drive::runRight(-100);
     vex::task::sleep(550);
@@ -157,10 +166,10 @@ namespace auton {
     drive::turn(-8, 100, 0.3, 4, 250); //Changed (-15)
 
     vex::task temp(delayedRunToBot);
-    drive::forward(-68);//-70.5
+    drive::forward(-69);//-70.5
     temp.stop();
 
-    drive::turn(92);
+    drive::turn(95);
     temp = vex::task(_bigLift);
     vex::task::sleep(800);
     drive::forward(21.5,60);
